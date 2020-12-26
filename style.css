@@ -49,6 +49,7 @@ img {
 	overflow: hidden;
 }
 .step {
+	z-index: 1;
 	margin-bottom: 60vh;
 	padding: 10px 20px;
 	border-radius: 10px;
