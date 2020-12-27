@@ -1,77 +1,135 @@
-html {
-	font-family: 'Noto Sans KR', sans-serif;
+@keyframes scroll {
+    0% {
+        background-position: 0 0; 
+    } 
+    100% {
+        background-position: -200px 200px; 
+    }
 }
+
+body, ul, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
 body {
-	margin: 0;
+    background-color: #222;
+    color: white;
+    overflow: hidden;
 }
-div, section, header, footer, p, h1, h2 {
-	box-sizing: border-box;
+
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
 }
-a {
-	color: royalblue;
+
+.wrapper {
+    width: 80vw;
+    margin: 100px auto;
 }
-img {
-	max-width: 100%;
-	height: auto;
+
+.monster {
+    background-color: #931f40;
+    transform: skewY(1deg);
 }
-.global-width {
-	max-width: 620px;
-	margin: 0 auto;
-	padding: 0 16px;
+
+.monster-item {
+    float: left;
+    width: 33.3333333%;
+    height: 650px;
+    position: relative;
+    line-height: 650px;
+    transition: all 0.5s;
+    animation-name: scroll;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-play-state: paused;
 }
-.scroll-graphic {
-	position: sticky;
-	top: 0;
-	height: 100vh;
-	overflow-x: hidden;
+
+.monster-item h2 {
+    font-family: 'Kaushan Script', cursive;
+    padding: 0 0.5em;
+    transition: all 0.5s;
+    font-size: 0;
+    opacity: 0;
+    color: white;
 }
-.graphic-item {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	transition: 0.5s;
-	will-change: opacity;
+
+
+.monster:hover .monster-item {
+    width: 20%; 
 }
-.visible {
-	opacity: 1;
+
+.monster .monster-item:hover {
+    width: 60%;
+    animation-play-state: running;
 }
-.scene-img {
-	max-height: 100vh;
+
+.monster .monster-item:hover h2 {
+    opacity: 1; 
+    font-size: 6rem;
 }
-.scroll-text {
-	position: relative;
-	overflow: hidden;
+
+.monster-item-cover {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.53, 1.6, 0.38, 1.66);
+    transform: translate(-50%,-50%) rotate(0) scale(0.5);
 }
-.step {
-	z-index: 1;
-	margin-bottom: 60vh;
-	padding: 10px 20px;
-	border-radius: 10px;
-	background: rgba(255,255,255,0.8);
-	box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+
+.monster-item:hover .monster-item-cover {
 }
-.bird {
-	position: absolute;
-	left: 0;
-	bottom: 70%;
-	width: 100px;
-	transform: translateX(-100%);
-	transition: 1.5s 0.5s linear;
+
+.monster-item.jack {
+    background-color: #67aa18;
+    text-align: right;
+    background-image: url(images/jack-bg.png);
 }
-[data-index="5"] .bird{
-	left: 30%;
-	bottom: 30%;
+
+.monster-item.ghosts {
+    background-color: #fa7200;
+    text-align: center;
+    background-image: url(images/music-bg.png);
 }
-.global-footer{
-	padding: 20px 0;
-	text-align: center;
+
+.monster-item.wolf {
+    background-image: url(images/wolf-bg.png);
 }
-.strikethrough{
-	text-decoration: line-through;
+
+.monster-item.jack:hover .monster-item-cover {
+    transform: translate(-80%,-50%) rotate(20deg) scale(0.8);
 }
+
+.monster-item.ghosts:hover .monster-item-cover {
+    transform: translate(-50%,-50%) rotate(-20deg) scale(1);
+}
+
+.monster-item.wolf:hover .monster-item-cover {
+    transform: translate(-20%,-50%) rotate(-20deg) scale(0.8);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
