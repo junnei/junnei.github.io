@@ -70,6 +70,7 @@
 
   function removeTransition(e) {
     const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!key) return;
     key.classList.remove('playing');
   }
 
