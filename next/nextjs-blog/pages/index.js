@@ -1,18 +1,12 @@
 import Head from 'next/head'
+import Container from '../components/container'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
 import Date from '../components/date'
-
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
-}
+import Intro from '../components/intro'
+import { Navbar } from '../components/Navbar.jsx';
 
 export default function Home({ allPostsData }) {
   return (
@@ -20,6 +14,10 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <Navbar/>
+      <Container>
+        <Intro />
+      </Container>
       <section className={utilStyles.headingMd}>
         <p>[Your Self Introduction]</p>
         <p>
@@ -45,4 +43,13 @@ export default function Home({ allPostsData }) {
       </section>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData
+    }
+  }
 }
