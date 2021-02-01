@@ -11,7 +11,7 @@ export default function Line({
         <h1 className="intro-hover text-6xl lg:text-8xl font-bold tracking-tighter leading-tight md:pr-2">
           {title}.
         </h1>
-        <div className="flex text-center md:text-right text-lg mr-4">
+        <div className="flex text-center md:text-right text-lg mr-10vw">
           <div className="sm:mx-0 hidden md:flex">
             <Image
               title={title}

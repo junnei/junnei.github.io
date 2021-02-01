@@ -21,12 +21,33 @@
 }
 
 @layer utilities {
-    @variants dark {
-      .filter-none {
-        filter: none;
-      }
-      .filter-grayscale {
-        filter: grayscale(100%);
-      }
+    @variants responsive {
+        .horizontal {
+          writing-mode: horizontal-tb;
+        }
+        
+        .vertical {
+          writing-mode: vertical-lr;
+        }
+        
+        .vertical-rl {
+          writing-mode: vertical-rl;
+        }
+
+        .text-shadow {
+          text-shadow: 1px 2px 3px black;
+        }
+
+        .text-shadow-md {
+          text-shadow: 4px 4px 8px black;
+        }
+
+        .text-shadow-lg {
+          text-shadow: 15px 15px 30px black;
+        }
+
+        .text-shadow-none {
+          text-shadow: none;
+        }
     }
   }

@@ -2,6 +2,10 @@ module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    boxShadow: {
+      DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+      sm: '0 0px 10px 0 rgba(0, 0, 0, 1)',
+    },
     extend: {
       height: {
         "5vw": "5vw",
@@ -219,6 +223,7 @@ module.exports = {
     },
   },
   variants: {
+    boxShadow: ['responsive', 'hover', 'focus'],
     extend: {},
   },
   plugins: [],
