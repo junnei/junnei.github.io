@@ -8,13 +8,6 @@ for (let i = 0; i < allCard.length; i++) {
   const img = card.querySelector(".card-thumbnail img");
   const description = card.querySelector(".card-info");
 
-  //Moving Animation Event
-  /*card.addEventListener("mousemove", (e) => {
-    let xAxis = ((rect.left + rect.right) / 2 - e.pageX) / 25;
-    let yAxis = ((rect.top + rect.bottom)  / 2 - e.pageY) / 25;
-    console.log( (rect.left + rect.right) / 2,e.pageX, xAxis, (rect.top + rect.bottom) / 2,e.pageY, yAxis);
-    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-  });*/
   //Animate In
   card.addEventListener("mouseenter", (e) => {
     card.style.transition = "all 0.1s ease";
@@ -44,11 +37,19 @@ for (let i = 0; i < allCard.length; i++) {
     }
     card.style.transform = `rotateY(0deg) rotateX(0deg) rotateZ(0deg)`;
     img.style.transform = "translateZ(0px) rotateZ(0deg)";
+    img.style.width = "15vw";
+    img.style.height = "15vw";
     description.style.transform = "translateZ(0px)";
+    description.style.fontSize = 'xx-large';
     const main = card.cloneNode(true);
     card.style.opacity = 0;
+    main.style.background = `linear-gradient(
+      to right,
+      rgba(190, 89, 177, 0.7),
+      rgba(86, 64, 187, 0.7)
+    )`;
     main.style.position = "fixed";
-    main.style.width = '37vh';
+    main.style.width = '70vw';
     main.style.height = '60vh';
     main.style.zIndex = 10;
     card.after(main);
@@ -68,10 +69,20 @@ for (let i = 0; i < allCard.length; i++) {
     info.after(a);
     const go = main.querySelector(".go");
 
+    var div = document.createElement('div');
+    div.style.transition = "all 1s ease";
+    div.style.fontSize = "x-large";
+    div.style.fontWeight = 500;
+    div.style.textAlign = "center";
+    div.style.transform = "translateZ(120px)"
+    div.innerHTML = "01 - JavaScript Drum Kit";
+    info.after(div);
+
+    //Moving Animation Event
     main.addEventListener("mousemove", (e) => {
-      main.style.transition = "all 0.2s ease-in-out";
-      let xAxis = (window.innerWidth / 2 - e.pageX) / 5;
-      let yAxis = (window.innerHeight / 2 - e.pageY) / 10;
+      main.style.transition = "all 0.1s ease-out";
+      let xAxis = (window.innerWidth / 2 - e.pageX) / 10;
+      let yAxis = (window.innerHeight / 2 - e.pageY) / 8;
       main.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
     });
 
@@ -80,9 +91,9 @@ for (let i = 0; i < allCard.length; i++) {
       info.style.transition = "all 1s ease";
       go.style.transition = "all 1s ease";
       //Popout
-      image.style.transform = "translateZ(100px)";
-      info.style.transform = "translateZ(80px)";
-      go.style.transform = "translateZ(50px)";
+      image.style.transform = "translateZ(200px)";
+      info.style.transform = "translateZ(150px)";
+      go.style.transform = "translateZ(100px)";
     });
 
     //Animate Out
