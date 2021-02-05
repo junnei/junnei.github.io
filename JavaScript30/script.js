@@ -40,6 +40,19 @@ Github :
 <br/>
 
 Feel free to enjoy! WELCOME!!<br/>
+
+<br/>
+
+Contact<br/>
+
+<a target="_blank" style="text-decoration: none;" href="mailto:peinguin77@gmail.com">
+<img style="vertical-align:-25%;" height="32" width="32" src="https://unpkg.com/simple-icons@v4/icons/gmail.svg" />
+</a> 
+
+<a target="_blank" style="text-decoration: none;" href="https://www.instagram.com/djun._/">
+<img style="vertical-align:-25%;" height="32" width="32" src="https://unpkg.com/simple-icons@v4/icons/instagram.svg" />
+</a>
+
 `;
 const data = [
   '01 - JavaScript Drum Kit',
@@ -191,16 +204,18 @@ function main() {
 
       main.style.transition = "all 1s ease";
       main.style.opacity = 1;
-      const main_img = main.querySelector(".card-thumbnail img");
-      const main_description = main.querySelector(".card-info");
-      main_img.style.transform = "translateZ(0px) rotateZ(0deg) translateX(0px) translateY(0px)";
-      main_img.style.width = "40vw";
-      main_img.style.height = "25vw";
-      main_img.style.borderRadius = "5vw 5vw";
-      main_img.style.transform = "translateY(-10vh)";
+      //Items
+      const image = main.querySelector(".card-thumbnail img");
+      const info = main.querySelector(".card-info");
+
+      image.style.transform = "translateZ(0px) rotateZ(0deg) translateX(0px) translateY(0px)";
+      image.style.width = "32vw";
+      image.style.height = "20vw";
+      image.style.borderRadius = "5vw 5vw";
+      image.style.transform = "translateY(-8vh)";
       
-      main_description.style.transform = "translateZ(0px)";
-      main_description.style.fontSize = 'xx-large';
+      info.style.transform = "translateZ(0px)";
+      info.style.fontSize = 'xx-large';
 
       main.style.maxHeight = "none";
       main.style.background = `linear-gradient(
@@ -213,10 +228,6 @@ function main() {
       main.style.height = '60vh';
       main.style.zIndex = 10;
       card.after(main);
-
-      //Items
-      const image = main.querySelector(".card-thumbnail img");
-      const info = main.querySelector(".card-info");
 
       var a = document.createElement('a');
       a.target = "_blank";
@@ -250,8 +261,11 @@ function main() {
         //Popout
         main.style.width = '70vw';
         main.style.boxShadow = "inset -3px -3px 10px rgba(0,0,0,0.3), inset 3px -3px 10px rgba(0,0,0,0.3)";
-      
-        image.style.transform = "scale(1.2) translateY(-10vh) translateZ(200px)";
+        
+        image.style.width = "45vw";
+        image.style.height = "23vw";
+
+        image.style.transform = "scale(1.2) translateY(-8vh) translateZ(200px)";
         info.style.transform = "translateZ(150px)";
         div.style.transform = "translateZ(120px)";
         go.style.transform = "translateZ(100px)";
@@ -272,7 +286,10 @@ function main() {
         main.style.width = '40vw';
         main.style.boxShadow = "none";
 
-        image.style.transform = "translateY(-5vh) translateZ(0px)";
+        image.style.width = "25vw";
+        image.style.height = "15vw";
+
+        image.style.transform = "translateY(0vh) translateZ(0px)";
         info.style.transform = "translateZ(0px)";
         div.style.transform = "translateZ(0px)";
         go.style.transform = "translateZ(0px)";
