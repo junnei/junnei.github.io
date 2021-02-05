@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <div id="loading"><div></div><div></div><div></div></div>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
   <div class="controls">
@@ -73,6 +76,10 @@
   </style>
 
   <script>
+      window.onload = function() {
+        document.querySelector("#loading").style.display = "none";
+      };
+
     const inputs = document.querySelectorAll('.controls input');
 
     function handleUpdate() {
