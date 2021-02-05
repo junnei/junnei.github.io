@@ -61,12 +61,16 @@ main {
   display:flex;
   flex-direction: row;
   flex-wrap:wrap;
-  align-items: center;
+  align-items: left;
   justify-content:space-around;
 }
 
 .card-container .card {
+  transition: all 1s ease;
   transform-style: preserve-3d;
+  display:flex;
+  flex-direction: column;
+  opacity: 1;
   font-size:10px;
   border-radius: 30px;
   padding: 1vh 1vw;
@@ -83,16 +87,17 @@ main {
 
 
 .card-container .card .card-thumbnail .circle {
-  width: 12vh;
-  height: 12vh;
+  width: 10vh;
+  height: 10vh;
+  position :absolute;
+  object-fit: cover;
+  object-position: top;
   background: linear-gradient(
     to right,
     rgba(187, 43, 216, 0.75),
     rgba(8, 83, 156, 0.75)
   );
-  position: absolute;
   border-radius: 50%;
-  z-index: 3;
 }
 
 
@@ -104,80 +109,46 @@ main {
   border-radius: 30%;
   overflow: hidden;
   min-width: 72px;
+  min-height: 72px;
   z-index: 4;
   transition: all 0.75s ease-out;
 }
 
 .card-container .card .card-info {
-  font-size:medium;
+  font-size: medium;
   font-weight: 500;
   text-align: center;
   padding-bottom: 10px;
 }
 
 
-.modal {
-  padding: 5vh 5vw;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: 10s ease;
-
-  background-color: rgba(255, 255, 255, 0.8);
-
-
-  z-index: 10;
-  display: none;
-  flex-direction: column;
-  
-  border-radius: 10px;
-
-}
-
-.close {
-	position: absolute;
-	top: 0;
-	right: 10px;
-	font-size: 42px;
-	color: #333;
-	transform: rotate(45deg);
-	cursor: pointer;
-}
-
-.close:hover {
-  color: #666;
-}
-
-
-
-.dashboard{
-  position: fixed;
-  background-color: #426696;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.user .container{
-  height: 10vh;
-  width: 10vh;
-  object-fit: cover;
-  border-radius: 30%;
-  overflow: hidden;
-}
-
-.profile {
-  width: 11vh;
-  margin: -0.5vh -0.5vh;
+.card-container .card .go {
+  padding: 0.5rem 2rem;
+  background: linear-gradient(
+    to right,
+    rgba(201, 62, 182, 0.5),
+    rgba(55, 23, 197, 0.5)
+  );
+  border: none;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: large;
+  color: white;
 }
 
 
 #button {
   position: fixed;
+  overflow: hidden;
   left:5vw;
   top:8vh;
 
+  min-width: 128px;
+  min-height: 36px;
+  width: 10vw;
+  height: 10vh;
   padding: 0.5rem 1rem;
   background: linear-gradient(
     to right,
@@ -192,18 +163,23 @@ main {
   font-size: xx-large;
   font-weight: 800;
   color: white;
-  z-index: 5;
+  z-index: 10;
   display: flex;
   flex-direction: row;
   align-items: center;
+  transform-origin: left;
+  transition: all 1s ease;
+  transform: none;
+  animation: none;
 }
 
-#button:hover{
-  transform-origin: left;
+#button.closed:hover{
   animation: button 2s infinite linear;
 }
 
 #button .button-container{
+  min-width: 64px;
+  min-height: 64px;
   height: 8vh;
   width: 8vh;
   object-fit: cover;
@@ -213,13 +189,19 @@ main {
 
 
 #button .button-container .profile{
+  min-width: 64px;
+  min-height: 64px;
   width: 8.2vh;
   margin: -0.1vh -0.1vh;
 }
 
 #button .button-info{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-left: 1vw;
   padding: 0 0.5vw;
+  transition: all 1s ease-in-out;
 }
 
 @keyframes button{
