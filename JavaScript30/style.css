@@ -49,6 +49,7 @@ main {
   margin: 3vh auto;
   font-size: xx-large;
   font-weight: 600;
+  text-shadow: 0px 0px 5px whitesmoke;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,6 +67,8 @@ main {
 }
 
 .card-container .card {
+  max-height: 25vh;
+  width: 10vw;
   transition: all 1s ease;
   transform-style: preserve-3d;
   display:flex;
@@ -75,7 +78,16 @@ main {
   border-radius: 30px;
   padding: 1vh 1vw;
   margin: 1vh 1vw;
-  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
+  box-shadow: inset -5px -5px 20px rgba(255,240,245,0.6), inset 4px 4px 15px rgba(0,0,0,0.6);
+  }
+
+.card-container .card:hover {
+  box-shadow: inset -3px -3px 10px rgba(255,255,255,0.5), inset 3px 3px 5px rgba(0,0,0,0.6);
+}
+
+.card-container .card:hover .card-thumbnail .card-image{
+  height:15vh;
+  width:15vh;
 }
 
 .card-container .card .card-thumbnail {
@@ -102,39 +114,45 @@ main {
 
 
 .card-container .card .card-thumbnail .card-image {
-  height:7vw;
-  width:7vw;
-  object-fit: cover;
-  object-position: top;
+  height:12vh;
+  width:12vh;
+  object-fit:cover;
   border-radius: 30%;
-  overflow: hidden;
   min-width: 72px;
   min-height: 72px;
   z-index: 4;
   transition: all 0.75s ease-out;
+  filter: drop-shadow(0px 0px 3px rgba(255,255,255,0.8));
 }
 
 .card-container .card .card-info {
   font-size: medium;
   font-weight: 500;
   text-align: center;
-  padding-bottom: 10px;
+  padding: 10px 0px;
 }
 
 
+.card-container .card .contents {
+  font-size : x-large;
+  font-weight : 500;
+  text-align : center;
+  padding : 2vh 0;
+}
+
 .card-container .card .go {
-  padding: 1.2vh 10vw;
+  padding: 1.2vh 5vw;
   background: linear-gradient(
     to right,
-    rgba(201, 62, 182, 0.5),
-    rgba(55, 23, 197, 0.5)
+    rgba(201, 62, 182, 0.8),
+    rgba(55, 23, 197, 0.8)
   );
   border: none;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   cursor: pointer;
   font-weight: bold;
-  font-size: x-large;
+  font-size: large;
   color: white;
 }
 
@@ -156,25 +174,26 @@ main {
     rgba(255, 255, 156, 0.75)
   );
   border: none;
+
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
   border-radius: 50px;
-  cursor: pointer;
 
   font-size: xx-large;
-  font-weight: 800;
+  font-weight: 900;
   color: white;
   z-index: 10;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content:space-evenly;
   transform-origin: left;
-  transition: all 1s ease;
+  transition: all 2s ease;
   transform: none;
-  animation: none;
+  animation: button 2s infinite linear;
 }
 
 #button.closed:hover{
-  animation: button 2s infinite linear;
+  animation: none;
 }
 
 #button .button-container{
@@ -185,6 +204,7 @@ main {
   object-fit: cover;
   border-radius: 50%;
   overflow: hidden;
+  box-shadow: none;
 }
 
 
@@ -196,12 +216,10 @@ main {
 }
 
 #button .button-info{
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-left: 1vw;
   padding: 0 0.5vw;
-  transition: all 1s ease-in-out;
+  text-shadow: 0px 0px 3px gray;
+  transition: all 0.5s ease-in-out;
 }
 
 @keyframes button{
