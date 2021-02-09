@@ -1,0 +1,465 @@
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다.
+모든 해상도에서 이 코드가 실행된다.
+미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+
+:root {
+  --cover-height: 50vh;
+  --list-height: 50vh;
+  --list-title-height: 64px;
+
+  --mini-week-width: 50vw;
+  --mini-week-height : var(--list-height);
+ 
+  --mini-week-title-width: 30vw;
+  --mini-week-title-height: var(--list-title-height);
+
+  --mini-week-side-width : 15vw;
+  --mini-week-side-height : calc(var(--mini-week-height) - var(--mini-week-title-height));
+  --mini-week-side-item : calc(var(--mini-week-side-height) / 7);
+
+  --mini-week-main-width : calc(var(--mini-week-width) - var(--mini-week-side-width));
+  --mini-week-main-height: calc(var(--mini-week-height) - var(--mini-week-title-height));
+
+  --mini-day-width: 50vw;
+  --mini-day-height : var(--list-height);
+  
+  --mini-day-title-height: var(--list-title-height);
+  --mini-day-side-width: 15vw;
+  --mini-day-side-item-height: calc((var(--mini-day-height) - var(--mini-day-title-height))/3);
+  --mini-day-main-width: calc(var(--mini-day-width) - var(--mini-day-side-width));
+  --mini-day-main-height: calc(var(--mini-day-height) - var(--mini-day-title-height));
+}
+
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 로딩 페이지 */
+#loading{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top:0px;
+  left:0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #373a41;
+  opacity: 0.93;
+  z-index: 10;
+  color:white;
+  font: 0.5em sans-serif;
+}
+
+#loading img{
+  transform:scale(0.5) translateY(15vh);
+  filter: drop-shadow( 0px 0px 3px rgba(255, 255, 255, .7));
+}
+
+#loading.invisible{
+  display: none;
+}
+
+
+/* 커버 페이지 */
+.cover{
+  font-family: "Poppins", sans-serif;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+}
+
+.cover .cover-wrapper{
+  width: 100vw;
+  height: var(--cover-height);
+  overflow:hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
+}
+
+.cover .cover-wrapper .cover-image{
+  transition:all 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
+  transform:scale(1.1);
+  filter: blur(2px);
+}
+
+.cover .cover-wrapper .cover-image:hover{
+  transform:scale(1);
+  filter: blur(0px);
+}
+
+
+#input-wrap{
+  position: fixed;
+  bottom : 85vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition:bottom 0.5s ease;
+}
+
+#input-wrap.activeClock{
+  bottom : 55vh;
+}
+
+#input-wrap:focus-within{
+  bottom : 55vh;
+}
+
+#input-box{
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  border: 0.1rem solid transparent;
+  width: 30vw;
+
+  font-size: 1rem;
+
+  transition:padding 0.5s ease, width 1s ease, font-size 0.5s ease;
+
+  background-color: rgba(255,255,255,0.5);
+  box-shadow: 
+    inset 0 0 0 5px black,
+    inset 6px 6px 5px rgba(dodgerblue, 1),
+    3px 3px 5px rgba(dodgerblue, 1);
+}
+
+#input-box:focus{
+  outline: none;
+
+  padding: 1rem 1.2rem;
+  width: 50vw;
+  font-size: 1.2rem;
+
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.4);
+  background-color: rgba(255,255,255,0.8);
+}
+
+
+#input-box::placeholder {
+  color: white;
+  font-size: 0.8rem;
+  text-shadow: 0 0 3px rgba(0,0,0,0.4);
+}
+
+#input-box:focus::placeholder{
+  color:rgba(128,128,128,0.4);
+  text-shadow:none;
+}
+
+#add-btn{
+  position: relative;
+  right:30px;
+  width: 1.15rem;
+  height: 1.15rem;
+  text-align: left;
+  border-radius: 50%;
+  border:none;
+  background-color: transparent;
+  box-shadow: 0 0 0 1px rgba(255,255,255,1);
+  fill:white;
+}
+
+#add-btn:hover{
+  background-color: white;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.5);
+  fill:rgb(96,96,96);
+}
+
+#input-wrap:focus-within #add-btn{
+  fill:black;
+  box-shadow:none;
+}
+
+#input-wrap:focus-within #add-btn:hover{
+  
+  background-color: white;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.75);
+  fill:black;
+}
+
+
+.cover .mini-list{
+  width: 100vw;
+  height: var(--list-height);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover .mini-list .mini-weekly{
+  height: var(--list-height);
+  width: var(--mini-week-width);
+  background-color: rosybrown;
+}
+
+
+/* 주간 일정표 */
+.mini-weekly .weekly-calendar{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.weekly-calendar .calendar-top-wrap{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: var(--mini-week-title-height);
+  background-color: bisque;
+}
+
+.weekly-calendar .calendar-top-wrap .current-month{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: var(--mini-week-title-width);
+  height: var(--mini-week-title-height);
+  background-color: sandybrown;
+}
+
+.weekly-calendar .calendar-top-wrap .current-month .current-year{
+  margin: 0 6px;
+}
+
+.weekly-calendar .calendar-top-wrap .calendar-top-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc((var(--mini-week-width) - var(--mini-week-title-width))/ 2);
+  height: var(--mini-week-title-height);
+  background-color: forestgreen;
+}
+
+
+.weekly-calendar .calendar-body{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: thistle;
+}
+
+.weekly-calendar .calendar-body .calendar-day{
+  width: var(--mini-week-side-width);
+  height: var(--mini-week-main-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: rebeccapurple;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date{
+  padding: 0 2vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: var(--mini-week-side-item);
+}
+
+.weekly-calendar .calendar-body .calendar-day .Sun{
+  color :red;
+}
+
+.weekly-calendar .calendar-body .calendar-day .Sat{
+  color : blue;
+}
+
+.weekly-calendar .calendar-body .calendar-contents{
+  display: flex;
+  width: var(--mini-week-main-width);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: royalblue;
+}
+
+.weekly-calendar .calendar-body .calendar-contents .calendar-content{
+  padding: 0 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--mini-week-main-width);
+  height: var(--mini-week-side-item);
+  overflow:scroll;
+}
+
+
+
+
+/* 일간 일정표 */
+.cover .mini-list .mini-day{
+  display: flex;
+  flex-direction: row;
+  height: var(--list-height);
+  width: var(--mini-day-width);
+  background-color: purple;
+}
+
+
+.mini-day .mini-day-side{
+  height: var(--list-height);
+  width: var(--mini-day-side-width);
+  background-color: blue;
+}
+
+
+.mini-day .mini-day-side .mini-day-side-menu{
+  height: var(--list-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  background-color: sandybrown;
+}
+
+.mini-day .mini-day-side .mini-day-side-menu .mini-day-side-close{
+  left: calc(var(--mini-week-width) + var(--mini-day-side-width));
+  height: var(--mini-day-title-height);
+  width: 24px;
+  position: absolute;
+  background-color: khaki;
+}
+
+.mini-day .mini-day-side .mini-day-side-menu .mini-day-side-bar{
+  height: var(--mini-day-title-height);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: salmon;
+}
+
+.mini-day .mini-day-side .mini-day-side-menu .mini-day-side-item{
+  height: var(--mini-day-side-item-height);
+  background-color: wheat;
+}
+
+
+.mini-day .mini-day-main{
+  height: var(--mini-day-height);
+  width: var(--mini-day-main-width);
+}
+
+.mini-day .mini-day-main .mini-day-top{
+  height: var(--mini-day-title-height);
+  width: var(--mini-day-main-width);
+  background-color: brown;
+}
+
+.mini-day .mini-day-main .mini-day-contents{
+  height: var(--mini-day-main-height);
+  width: var(--mini-day-main-width);
+  background-color: rgb(55, 134, 95);
+}
+
+/* 해상도가 768px 이상일 때 실행함
+@media all and (min-width:768px) {
+
+  :root {
+    --cover-height: 75vh;
+    --list-height: 25vh;
+    --list-title-height: 48px;
+  }
+
+
+} */
+
+/* Tablet Device */
+/* 해상도가 768px 이상이고 1024px 이하일 때 실행함 */
+@media all and (min-width:768px) and (max-width:1024px) {
+
+    :root {
+      --cover-height: 60vh;
+      --list-height: 40vh;
+      --list-title-height: 42px;
+
+      --mini-week-title-width: 35vw;
+    }
+
+    #input-wrap{
+      bottom : 50vh;
+    }
+
+    .weekly-calendar .calendar-top-wrap .current-month{
+      flex-direction: row;
+    }
+}
+
+/* Desktop Device */
+/* 해상도가 1025px 이상일 때 실행함 */
+@media all and (min-width:1025px) {
+
+  :root {
+    --cover-height: 75vh;
+    --list-height: 25vh;
+    --list-title-height: 36px;
+
+    --mini-week-title-width: 40vw;
+
+    --mini-week-side-width : var(--mini-week-width);
+    --mini-week-side-height : calc((var(--mini-week-height) - var(--mini-week-title-height))/4);
+    --mini-week-side-item : calc(var(--mini-week-side-width) / 7);
+
+    --mini-week-main-width : var(--mini-week-width);
+    --mini-week-main-height : calc(var(--mini-week-height) - var(--mini-week-title-height) - var(--mini-week-side-height));
+
+    }
+
+
+    #input-wrap{
+      bottom : 40vh;
+    }
+    
+    .weekly-calendar .calendar-top-wrap .current-month{
+      flex-direction: row;
+    }
+
+    .weekly-calendar .calendar-body{
+      flex-direction: column;
+    }
+
+    .weekly-calendar .calendar-body .calendar-day{
+      height: var(--mini-week-side-height);
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .weekly-calendar .calendar-body .calendar-day .calendar-date{
+      padding: 2vh 0.5vw;
+      width: var(--mini-week-side-item);
+      height: var(--mini-week-side-height);
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .weekly-calendar .calendar-body .calendar-contents{
+      width: var(--mini-week-main-width);
+      height: var(--mini-week-main-height);
+      flex-direction: row;
+    }
+
+    .weekly-calendar .calendar-body .calendar-contents .calendar-content{
+      padding: 2vh 0.5vw;
+      width: var(--mini-week-side-item);
+      flex-direction: column;
+    }
+
+
+}
