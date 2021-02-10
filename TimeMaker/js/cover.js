@@ -1,5 +1,4 @@
 //공통
-
 const dayList = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const weekList = ['1st','2nd','3rd','4th','5th','6th'];
 const monthList = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -39,7 +38,13 @@ function setWeekRange(year, month, date, day) {
     for(let i = 0; i < 7 ;i++){
         const input = document.createElement('div');
         input.classList.add('calendar-date');
+
         const data = new Date(year, month, date - day + i);
+        input.addEventListener('click',() => {
+            viewDay = data;
+            repaint();
+        });
+
         const input_day = document.createElement('div');
         input_day.classList.add('week-day');
         input_day.append(dayList[data.getDay()]);
@@ -75,7 +80,7 @@ function setWeekContent(year, month, date, day) {
         const input = document.createElement('div');
         input.classList.add('calendar-content');
         const data = new Date(year, month, date - day + i);
-        const keyId = data.getFullYear() + ((data.getMonth() + 1) < 10 ? '0' + (data.getMonth() + 1) : (data.getMonth() + 1)).toString() + (data.getDate() < 10 ? '0' + data.getDate() : data.getDate());
+        const keyId = data.getFullYear() +'-'+ ((data.getMonth() + 1) < 10 ? '0' + (data.getMonth() + 1) : (data.getMonth() + 1)).toString() +'-'+ (data.getDate() < 10 ? '0' + data.getDate() : data.getDate());
         
         if (JSON.parse(localStorage.getItem(keyId)) === null) {
             const add = document.createElement('button');
@@ -86,6 +91,10 @@ function setWeekContent(year, month, date, day) {
             add.appendChild(newBtn);
             add.addEventListener('click',()=>{
                 toDoInput.focus();
+                activateSetting();
+                handleSetting();
+                const todoDate = document.getElementById("input-date");
+                todoDate.value = keyId;
             });
     
             input.appendChild(add);
@@ -100,6 +109,9 @@ function setWeekContent(year, month, date, day) {
                         todo.appendChild(document.createTextNode(x.text));
                     item.appendChild(todo);
                     item.classList.add('todo');
+                    if(x.complete==1){
+                        item.classList.add('complete');
+                    }
                     item.style.backgroundColor = x.color;
                 div.appendChild(item);
                 div.classList.add('todo-wrap');
@@ -188,7 +200,6 @@ function setDayTitle(year, month, date, day) {
 
     const yesterDay = new Date;
     yesterDay.setDate(today.getDate() - 1);
-    console.log(yesterDay);
     const tomorrow = new Date;
     tomorrow.setDate(today.getDate() + 1);
 
@@ -218,7 +229,7 @@ function setDayTitle(year, month, date, day) {
 function setDayContent(year, month, date, day) {
     const input = document.createElement('div');
     input.classList.add('day-content');
-    const keyId = year + ((month + 1) < 10 ? '0' + (month + 1) : (month + 1).toString()) + (date < 10 ? '0' + date : date);
+    const keyId = year +'-'+ ((month + 1) < 10 ? '0' + (month + 1) : (month + 1).toString()) +'-'+ (date < 10 ? '0' + date : date);
     
     if (JSON.parse(localStorage.getItem(keyId)) === null) {
         const div = document.createElement('div');
@@ -232,6 +243,10 @@ function setDayContent(year, month, date, day) {
             add.appendChild(newBtn);
             add.addEventListener('click',()=>{
                 toDoInput.focus();
+                activateSetting();
+                handleSetting();
+                const todoDate = document.getElementById("input-date");
+                todoDate.value = keyId;
             });
 
         input.appendChild(div);
@@ -244,12 +259,24 @@ function setDayContent(year, month, date, day) {
                 const item = document.createElement('div');
                 item.classList.add('todo-icon');
                 item.style.backgroundColor = x.color;
+                if(x.complete==1){
+                    item.classList.add('complete');
+                }
+                item.addEventListener('click',()=>{completeTodo(keyId,x.id)});
+
                 const todo = document.createElement('div');
                 todo.classList.add('todo-content');
                 todo.appendChild(document.createTextNode(x.text));
+                
+                const time = document.createElement('div');
+                if(x.start!="00:00" || x.end!="00:00"){
+                    time.append(x.start+'~'+x.end);
+                }
+                todo.appendChild(time);
                 const del = document.createElement('div');
                 del.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg>`;
                 del.classList.add('todo-delete');
+                del.addEventListener('click',()=>{deleteTodo(keyId,x.id)});
             div.classList.add('todo-wrap');
             div.appendChild(item);
             div.appendChild(todo);
@@ -258,6 +285,49 @@ function setDayContent(year, month, date, day) {
         });
     }
     dayContents.append(input);
+}
+
+function completeTodo(date, id) {
+    textData = JSON.parse(localStorage.getItem(date));
+    textData.map((x,index)=>{
+        if(id == x.id){
+            let todos = JSON.parse(localStorage.getItem(date));
+
+            console.log(todos);
+            temp = todos.splice(index,1);
+            if(temp[0].complete ==0){
+                temp[0].complete = 1;
+            }
+            else{
+                temp[0].complete = 0;
+            }
+            console.log(temp);
+
+            todos = JSON.parse(localStorage.getItem(date));
+            todos.splice(index,1,temp[0]);
+            console.log(todos);
+
+            localStorage.setItem(date,JSON.stringify(todos));
+            repaint();
+        }
+    });
+}
+
+function deleteTodo(date, id) {
+    textData = JSON.parse(localStorage.getItem(date));
+    textData.map((x,index)=>{
+        if(id == x.id){
+            let todos = JSON.parse(localStorage.getItem(date));
+            if(todos.length>1){
+                todos.splice(index,1);
+                localStorage.setItem(date,JSON.stringify(todos));
+            }
+            else{
+                localStorage.removeItem(date);
+            }
+            repaint();
+        }
+    });
 }
 
 function initDay() {
@@ -288,7 +358,6 @@ function moveDay(move) {
     repaintDay();
 }
 
-
 function repaintDay(){
     let year = viewDay.getFullYear();
     let month = viewDay.getMonth();
@@ -301,10 +370,31 @@ function repaintDay(){
     setDayContent(year, month, date, day);
 }
 
+//세팅
+const opacityBtn = document.getElementById("mini-list-opacity");
+const closeBtn = document.getElementById("mini-list-close");
 
-
-
-
+function initSetting(){
+    opacityBtn.addEventListener('click',()=>{
+        const miniList = document.querySelector('.mini-list');
+        if(miniList.classList.contains('opacity')){
+            miniList.classList.remove('opacity');
+        }
+        else{
+            miniList.classList.add('opacity');
+        }
+    });
+    closeBtn.addEventListener('click',()=>{
+        const miniList = document.querySelector('.mini-list');
+        if(miniList.classList.contains('close')){
+            miniList.classList.remove('close');
+        }
+        else{
+            miniList.classList.add('close');
+        }
+    });
+}
+initSetting();
 
 //할일 추가
 const toDoInput = document.getElementById("input-box");
@@ -320,18 +410,57 @@ function initTodos() {
         }
     });
     addBtn.addEventListener("click", handleSubmit);
-    openBtn.addEventListener("click", handleSetting);
+    openBtn.addEventListener("click", ()=>{
+        toDoInput.focus();
+
+        activateSetting();
+        changeActivateSetting();
+        handleSetting();
+    });
+}
+
+function activateSetting() {
+    if(!inputData.classList.contains('active')){
+        inputData.classList.add('visible');
+        setTimeout(function () {
+            inputData.classList.add('active');
+        }, 1);
+    }
+}
+
+function changeActivateSetting() {
+    if(inputData.classList.contains('active')){
+        inputData.classList.remove('active');
+        setTimeout(function () {
+            inputData.classList.remove('visible');
+        }, 100);
+    }
+    else{
+        inputData.classList.add('visible');
+        setTimeout(function () {
+            inputData.classList.add('active');
+        }, 1);
+    }
 }
 
 function handleSetting() {
-    const colorInput = document.createElement('Input');
-    colorInput.type = "color";
-    colorInput.placeholder = "yyyy-mm-dd";
-    colorInput.id = "input-date";
+    const colorDiv = document.createElement('div');
+    colorDiv.innerHTML = "color";
+    colorDiv.classList.add("color-wrap");
+        const colorWrap = document.createElement('div');
+        colorWrap.id = 'color-picker-wrap';
+            const colorInput = document.createElement('Input');
+            colorInput.type = "color";
+            colorInput.placeholder = "yyyy-mm-dd";
+            colorInput.id = "input-color";
+            colorInput.addEventListener('change',() => {colorWrap.style.backgroundColor = colorInput.value;})
+        colorWrap.appendChild(colorInput);
+    colorDiv.appendChild(colorWrap);
 
     const dateInput = document.createElement('Input');
     dateInput.type = "date";
     dateInput.id="input-date";
+    dateInput.style.width='';
     
     const startInput = document.createElement('Input');
     startInput.type = "time";
@@ -343,30 +472,86 @@ function handleSetting() {
     endInput.id = "input-time-end";
     startInput.step = "300";
 
-    
-    inputData.append(dateInput,colorInput,startInput,endInput);
+
+    const resetBtn = document.createElement('Button');
+    resetBtn.id="reset-btn";
+    resetBtn.innerText="x";
+    resetBtn.addEventListener('click',()=>{
+        const todoColor = document.getElementById("input-color");
+        const todoDate = document.getElementById("input-date");
+        const todoStart = document.getElementById("input-time-start");
+        const todoEnd = document.getElementById("input-time-end");
+        todoColor.value = "";
+        todoDate.value = "";
+        todoStart.value = "";
+        todoEnd.value = "";
+
+        const colorWrap = document.getElementById("color-picker-wrap");
+        colorWrap.style.backgroundColor = "";
+    });
+
+
+    inputData.innerHTML="";
+    inputData.append(colorDiv,dateInput,startInput,endInput,resetBtn);
 }
 
 function handleSubmit() {
     const currentValue = toDoInput.value;
-    const today = new Date();
-    const key = today.getFullYear() + ((today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1)).toString() + ( today.getDate() < 10 ? '0' + today.getDate() : today.getDate() )
-    write(key, currentValue);
+    write(currentValue);
     toDoInput.value = "";
     repaint();
 }
 
-function write(cell, currentValue) {
+function write(currentValue) {
     if (currentValue === undefined || currentValue === "") return;
-    const keyId = cell;
+
+
+    const todoColor = document.getElementById("input-color");
+    const todoDate = document.getElementById("input-date");
+    const todoStart = document.getElementById("input-time-start");
+    const todoEnd = document.getElementById("input-time-end");
     
+    let keyId;
+    let currentColor;
+    let currentStart;
+    let currentEnd;
+    
+    if(todoDate === null || todoDate.value === ""){
+        keyId = today.getFullYear() +'-'+ ((today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1)).toString() +'-'+ (today.getDate() < 10 ? '0' + today.getDate() : today.getDate());
+    }
+    else{
+        keyId = todoDate.value;
+    }
+    
+    if(todoColor === null || todoColor.value === ""){
+        currentColor = "white";
+    }
+    else{
+        currentColor = todoColor.value;
+    }
+
+    if(todoStart === null || todoStart.value === ""){
+        currentStart = "00:00";
+    }
+    else{
+        currentStart = todoStart.value;
+    }
+
+    if(todoEnd === null || todoEnd.value === ""){
+        currentEnd = "00:00";
+    }
+    else{
+        currentEnd = todoEnd.value;
+    }
+
     if (JSON.parse(localStorage.getItem(keyId)) === null) {
         textData = [];
     }
     else {
         textData = JSON.parse(localStorage.getItem(keyId));
     }
-    const textObj = { id: textData.length + 1, text: currentValue, time: 0, color:'black' };
+    
+    const textObj = { id: textData.length + 1, text: currentValue, color: currentColor, start: currentStart, end: currentEnd, complete:0};
     textData.push(textObj);
     localStorage.setItem(keyId, JSON.stringify(textData));
   }

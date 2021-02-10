@@ -101,6 +101,7 @@
   position: fixed;
   bottom : 85vh;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -116,13 +117,133 @@
 }
 
 #input-data{
-  transition:all 0.5s ease;
-  transform:translateY(-30px);
-  background-color: aliceblue;
+  height: 38px;
+  background-color: rgba(255,255,255,0.5);
+  border: 3px solid rgba(255,255,255,0.5);
+  border-radius: 10px;
+  transition:transform 0.3s ease,opacity 0.1s ease-in;
   position: absolute;
-  display: flex;
+  opacity: 0;
+  display: none;
   flex-direction: row;
+  align-items: center;
+  transform:none;
 }
+
+#input-data.active{
+  opacity: 1;
+  transform:translateY(-3.1rem);
+}
+
+#input-data.visible{
+  display:flex;
+}
+
+#input-data input{
+  border:none;
+  background-color: rgba(255,255,255,0.5);
+  margin: 0 3px;
+}
+
+#input-data .color-wrap{
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+	width: 32px;
+  height: 32px;
+  padding-bottom: 4px;
+  font-size:3px;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#color-picker-wrap{
+  background-color: white;
+	width: 16px;
+	height: 16px;
+	border: 1px solid white;
+  box-shadow: 0 0 3px 1px rgba(0,0,0,0.4);
+  outline: none;
+}
+
+#input-color{
+  opacity: 0;
+  float:left;
+  width:18px;
+  margin-left:-2px;
+  margin-top:-5px;
+}
+
+
+#input-data #input-date{
+  height: 32px;
+  width: 140px;
+  padding-left: 5px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+}
+
+
+#input-date::-webkit-datetime-edit-text,
+#input-date::-webkit-clear-button,
+#input-date::-webkit-inner-spin-button,
+#input-date::-webkit-outer-spin-button {
+    display:none;
+}
+
+#input-date::-webkit-calendar-picker-indicator {
+    margin: 0;
+    padding: 0;
+    padding-right:5px;
+}
+     
+
+#input-time-start,
+#input-time-end{
+  padding-left:5px;
+  width: 90px;
+  height: 32px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  outline: none;
+}
+
+#input-time-start::-webkit-datetime-edit-text,
+#input-time-start::-webkit-clear-button,
+#input-time-start::-webkit-inner-spin-button,
+#input-time-start::-webkit-outer-spin-button,
+#input-time-end::-webkit-datetime-edit-text,
+#input-time-end::-webkit-clear-button,
+#input-time-end::-webkit-inner-spin-button,
+#input-time-end::-webkit-outer-spin-button{
+    display:none;
+}
+
+#input-time-start::-webkit-calendar-picker-indicator,
+#input-time-end::-webkit-calendar-picker-indicator{
+    margin: 0;
+    padding: 0;
+    padding-right:5px;
+}
+     
+#reset-btn{
+  text-align: center;
+  height: 16px;
+  width: 16px;
+  border: 0;
+  border-radius: 50%;
+  margin-right: 3px;
+  background-color: rgba(255,255,255,0.5);
+}
+
 
 
 #input-box{
@@ -223,14 +344,39 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  transition:all 1s ease;
   background-color: rgba(245,248,250,0.5);
 }
 
-.cover .mini-list .mini-list-close{
-  width: 120px;
-  height: 120px;
+.cover .mini-list.opacity{
+  background-color: rgb(245,248,250);
+}
+
+.cover .mini-list.close{
+  transform: translateY(50vh);
+}
+
+.cover .mini-list #mini-list-setting{
+  position: absolute;
+  right: 0;
+  bottom: 50vh;
+  width: 48px;
+  height: 24px;
   float: right;
-  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 10px;
+}
+
+.cover .mini-list #mini-list-setting #mini-list-opacity,
+.cover .mini-list #mini-list-setting #mini-list-close{
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 10px;
 }
 
 
@@ -597,6 +743,19 @@
   background-color: none;
   margin: 1vh 2vw;
 }
+
+.day-content .todo-wrap .todo-icon.complete::after{
+  content:"";
+  position: absolute;
+  display: inline-block;
+  height: 15px;
+  width: 10px;
+  transform: translateX(1.5px) translateY(-6px) rotate(45deg);
+  
+  border-bottom: 5px solid black;
+  border-right: 5px solid black;
+}
+
 
 .day-content .todo-wrap .todo-content{
   margin-left: 1vw;
