@@ -783,9 +783,9 @@
 @media all and (min-width:768px) and (max-width:1024px) {
 
     :root {
-      --cover-height: 60vh;
-      --list-height: 40vh;
-      --list-title-height: 42px;
+      --cover-height: 55vh;
+      --list-height: 45vh;
+      --list-title-height: 45px;
 
       --mini-week-title-width: 35vw;
 
@@ -805,9 +805,9 @@
 @media all and (min-width:1025px) {
 
   :root {
-    --cover-height: 75vh;
-    --list-height: 25vh;
-    --list-title-height: 36px;
+    --cover-height: 70vh;
+    --list-height: 30vh;
+    --list-title-height: 42px;
 
     --mini-week-title-width: 40vw;
 
