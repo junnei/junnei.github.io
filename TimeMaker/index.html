@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/cover.css" />
     <link rel="stylesheet" href="css/clock.css" />
     <link rel="stylesheet" href="css/header.css" />
-    <script defer src="js/calendar.js"></script>
+    <script defer src="js/cover.js"></script>
     <script defer src="js/clock.js"></script>
     <script defer src="js/header.js"></script>
   </head>
@@ -22,7 +22,7 @@
       from loading.io
     </div>
 
-    <!--헤더-->
+    <!--헤더 영역-->
     <div id="top-nav">
       <div class="nav-time-wrap"></div>
       <div class="nav-weather-wrap"></div>
@@ -50,10 +50,13 @@
         </div>
 
         <div id="input-wrap" class="input-wrap">
-          <input type="text" placeholder="Input 'What To Do'" id="input-box" class="input-box">
-          <button type="button" id="add-btn" class="add-btn">
-            <!--<img src="svg/enter.svg" alt="enter">-->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <div id="input-data"></div>
+          <input type="text" placeholder="Input 'What To Do'" id="input-box">
+          <button type="button" id="ellipsis-btn">
+            <img src="svg/ellipsis-filled.svg" alt="ellipsis">
+         </button>
+         <button type="button" id="add-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
               <path d="M19,6a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H7.41l1.3-1.29A1,1,0,0,0,7.29,9.29l-3,3a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l3,3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L7.41,14H17a3,3,0,0,0,3-3V7A1,1,0,0,0,19,6Z"/>
            </svg>
          </button>
@@ -63,14 +66,18 @@
 
       <!--하단 리스트-->
       <div class="mini-list">
+        <!--하단 리스트 -->
+        <div class="mini-list-close"></div>
         <!--주간 일정표-->
         <div class="mini-weekly">
           <div id="weekly-calendar" class="weekly-calendar">
+            <!--주간 일정표 상단바-->
             <div class="calendar-top-wrap">
               <div class="calendar-top-btn" id="week-pre-btn">&#60;</div>
-              <div id="current-title" class="current-month"></div>
+              <div id="current-week" class="current-week"></div>
               <div class="calendar-top-btn" id="week-next-btn">&#62;</div>
             </div>
+            <!--주간 일정표 메인화면-->
             <div class="calendar-body">
               <div class="calendar-day" id="calendar-day"></div>
               <div class="calendar-contents" id="calendar-contents"></div>
@@ -81,6 +88,20 @@
         <!--일간 일정표-->
         <div class="mini-day">
           <!--일간 일정표 사이드바-->
+          <div class="mini-day-top-wrap">
+            <div class="mini-day-top-btn" id="day-pre-btn">&#60;</div>
+            <div id="current-day" class="current-day"></div>
+            <div class="mini-day-top-btn" id="day-next-btn">&#62;</div>
+          </div>
+          <!--일간 일정표 메인화면-->
+          <div class="mini-day-body">
+            <div class="mini-day-contents" id="day-contents"></div>
+          </div>
+        </div>
+
+        <!--
+        <div class="mini-day">
+         
           <div class="mini-day-side">
             <div class="mini-day-side-menu">
               <div class="mini-day-side-close">닫기</div>
@@ -93,13 +114,14 @@
               <div class="mini-day-side-item">2일후</div>
             </div>
           </div>
-          <!--일간 일정표 메인화면-->
+          
           <div class="mini-day-main">
             <div class="mini-day-top"></div>
             <div class="mini-day-contents"></div>
           </div>
           
         </div>
+        -->
       </div>
     </div>
 

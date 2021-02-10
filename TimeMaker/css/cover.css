@@ -24,9 +24,9 @@
   --mini-day-width: 50vw;
   --mini-day-height : var(--list-height);
   
+  --mini-day-title-width: 30vw;
   --mini-day-title-height: var(--list-title-height);
-  --mini-day-side-width: 15vw;
-  --mini-day-side-item-height: calc((var(--mini-day-height) - var(--mini-day-title-height))/3);
+
   --mini-day-main-width: calc(var(--mini-day-width) - var(--mini-day-side-width));
   --mini-day-main-height: calc(var(--mini-day-height) - var(--mini-day-title-height));
 }
@@ -72,12 +72,10 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: blue;
 }
 
 .cover .cover-wrapper{
-  width: 100vw;
-  height: var(--cover-height);
+  height: 100vh;
   overflow:hidden;
   display: flex;
   align-items: center;
@@ -86,9 +84,8 @@
 }
 
 .cover .cover-wrapper .cover-image{
-  transition:all 0.5s ease;
-  width: 100%;
-  height: 100%;
+  transition:transform 0.5s ease, filter 0.5s ease;
+  height: 100vh;
   object-fit:cover;
   transform:scale(1.1);
   filter: blur(2px);
@@ -117,6 +114,16 @@
 #input-wrap:focus-within{
   bottom : 55vh;
 }
+
+#input-data{
+  transition:all 0.5s ease;
+  transform:translateY(-30px);
+  background-color: aliceblue;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+}
+
 
 #input-box{
   padding: 0.75rem 1rem;
@@ -158,9 +165,27 @@
   text-shadow:none;
 }
 
+
+#ellipsis-btn{
+  display: none;
+}
+
+#input-wrap:focus-within #ellipsis-btn{
+  display: flex;
+  position: absolute;
+  right: 50px;
+  border:none;
+  background-color: transparent;
+}
+
+#input-wrap:focus-within #ellipsis-btn img{
+  width:1.15rem;
+}
+
+
 #add-btn{
-  position: relative;
-  right:30px;
+  position: absolute;
+  right:20px;
   width: 1.15rem;
   height: 1.15rem;
   text-align: left;
@@ -183,7 +208,6 @@
 }
 
 #input-wrap:focus-within #add-btn:hover{
-  
   background-color: white;
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.75);
   fill:black;
@@ -191,18 +215,28 @@
 
 
 .cover .mini-list{
+  position:fixed;
+  bottom:0px;
   width: 100vw;
   height: var(--list-height);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: rgba(245,248,250,0.5);
 }
+
+.cover .mini-list .mini-list-close{
+  width: 120px;
+  height: 120px;
+  float: right;
+  background-color: black;
+}
+
 
 .cover .mini-list .mini-weekly{
   height: var(--list-height);
   width: var(--mini-week-width);
-  background-color: rosybrown;
 }
 
 
@@ -221,21 +255,23 @@
   align-items: center;
   text-align: center;
   height: var(--mini-week-title-height);
-  background-color: bisque;
+  box-shadow: 0px 0px 1px black;
 }
 
-.weekly-calendar .calendar-top-wrap .current-month{
+.weekly-calendar .calendar-top-wrap .current-week{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: var(--mini-week-title-width);
   height: var(--mini-week-title-height);
-  background-color: sandybrown;
+
 }
 
-.weekly-calendar .calendar-top-wrap .current-month .current-year{
+.weekly-calendar .calendar-top-wrap .current-week .current-year{
   margin: 0 6px;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #373a41;
 }
 
 .weekly-calendar .calendar-top-wrap .calendar-top-btn{
@@ -244,7 +280,6 @@
   align-items: center;
   width: calc((var(--mini-week-width) - var(--mini-week-title-width))/ 2);
   height: var(--mini-week-title-height);
-  background-color: forestgreen;
 }
 
 
@@ -253,7 +288,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: thistle;
+  box-shadow: 0px 0px 1px black;
 }
 
 .weekly-calendar .calendar-body .calendar-day{
@@ -262,7 +297,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: rebeccapurple;
 }
 
 .weekly-calendar .calendar-body .calendar-day .calendar-date{
@@ -272,6 +306,52 @@
   justify-content: flex-end;
   align-items: center;
   height: var(--mini-week-side-item);
+  box-shadow: -5px 1px 1px black;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date .week-day{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 6vw;
+  text-align: center;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date .week-date{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 3vw;
+  height: 3vw;
+  margin-left: 2vw;
+  text-align: center;
+  z-index: 1;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date.today{
+  font-weight: 500;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date.today .week-date{
+  color :white;
+}
+
+#today-bg{
+  position: absolute;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 3vw;
+  height: 3vw;
+}
+
+#today-bg::before{
+  position:inherit;
+  content: "";
+  width:1.8em;
+  height:1.8rem;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,1);
 }
 
 .weekly-calendar .calendar-body .calendar-day .Sun{
@@ -288,18 +368,118 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: royalblue;
 }
 
 .weekly-calendar .calendar-body .calendar-contents .calendar-content{
   padding: 0 2vw;
   display: flex;
+  flex-wrap:wrap;
   justify-content: center;
   align-items: center;
   width: var(--mini-week-main-width);
   height: var(--mini-week-side-item);
-  overflow:scroll;
+  overflow: scroll;
+  border-radius: 5px;
+  box-shadow: 0px 0px 1.5px rgba(0,0,0,0.8);
 }
+
+
+.calendar-content .todo-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0px solid black;
+  border-radius: 6px;
+  width : 28px;
+  height : 21px;
+  background-color: rgba(255,255,255,0.3);
+  margin: 1.5px 3px;
+}
+
+.calendar-content .todo-wrap:hover{
+  border: 1px solid rgba(120,120,120,0.1);
+  min-width : 22px;
+  min-height : 21px;
+  width : 28px;
+  height : 21px;
+  background-color: rgba(255,255,255,0.8);
+  box-shadow: 1px 1px 3px rgba(100,120,130,0.7);
+}
+
+
+.calendar-content .todo-wrap .todo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border : 2px solid black;
+  min-width : 10px;
+  min-height : 10px;
+  width : 10px;
+  height : 10px;
+  background-color: white;
+}
+
+
+.calendar-content .todo-wrap .todo.complete::after{
+  content:"";
+  position: absolute;
+  display: inline-block;
+  height: 15px;
+  width: 10px;
+  transform: translateX(1.5px) translateY(-6px) rotate(45deg);
+  
+  border-bottom: 5px solid black;
+  border-right: 5px solid black;
+}
+
+
+.calendar-content .todo-wrap .todo .todo-content{
+  position: absolute;
+  display: none;
+  opacity: 0;
+  justify-content: center;
+  align-self: flex-end;
+  margin-bottom: 6px;
+  padding: 5px 8px;
+  min-width:60px;
+  max-width:180px;
+  min-height:30px;
+  border : 2px solid rgb(150,150,160);
+  transition:opacity 1s ease,transform 0.5s ease;
+  transform:none;
+  background:rgba(245,248,250,0.95);
+  border-radius: 30px;
+}
+
+
+.calendar-content .todo-wrap.visible .todo .todo-content{
+  display: flex;
+}
+
+.calendar-content .todo-wrap.active .todo .todo-content{
+  opacity: 1;
+  transform: translateY(-20px);
+}
+
+.calendar-content .todo-wrap.active .todo .todo-content::before {
+  border-top: 9px solid rgb(150,150,160);
+  border-bottom:0px solid transparent;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  content:"";
+  position:absolute;
+  bottom:-9px;
+ }
+
+.calendar-content .todo-wrap.active .todo .todo-content::after {
+  border-top: 6px solid rgba(245,248,250,1);
+  border-bottom:0px solid transparent;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  content:"";
+  position:absolute;
+  bottom:-6px;
+ }
 
 
 
@@ -307,78 +487,133 @@
 /* 일간 일정표 */
 .cover .mini-list .mini-day{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: var(--list-height);
   width: var(--mini-day-width);
-  background-color: purple;
 }
 
-
-.mini-day .mini-day-side{
-  height: var(--list-height);
-  width: var(--mini-day-side-width);
-  background-color: blue;
-}
-
-
-.mini-day .mini-day-side .mini-day-side-menu{
-  height: var(--list-height);
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  background-color: sandybrown;
-}
-
-.mini-day .mini-day-side .mini-day-side-menu .mini-day-side-close{
-  left: calc(var(--mini-week-width) + var(--mini-day-side-width));
+.mini-day .mini-day-top-wrap{
   height: var(--mini-day-title-height);
-  width: 24px;
-  position: absolute;
-  background-color: khaki;
-}
-
-.mini-day .mini-day-side .mini-day-side-menu .mini-day-side-bar{
-  height: var(--mini-day-title-height);
+  width: var( --mini-day-width);
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  background-color: salmon;
+
+  box-shadow: 0px 0px 1px black;
 }
 
-.mini-day .mini-day-side .mini-day-side-menu .mini-day-side-item{
-  height: var(--mini-day-side-item-height);
-  background-color: wheat;
-}
-
-
-.mini-day .mini-day-main{
-  height: var(--mini-day-height);
-  width: var(--mini-day-main-width);
-}
-
-.mini-day .mini-day-main .mini-day-top{
+.mini-day .mini-day-top-wrap .mini-day-top-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  width: calc((var(--mini-day-width) - var(--mini-day-title-width))/ 2);
   height: var(--mini-day-title-height);
-  width: var(--mini-day-main-width);
-  background-color: brown;
 }
 
-.mini-day .mini-day-main .mini-day-contents{
+
+.mini-day .mini-day-top-wrap .current-day{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: var(--mini-week-title-width);
+  height: var(--mini-week-title-height);
+}
+
+.mini-day .mini-day-top-wrap .current-day .border-bottom{
+  margin: 0 6px;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #373a41;
+}
+
+.mini-day .mini-day-body{
   height: var(--mini-day-main-height);
   width: var(--mini-day-main-width);
-  background-color: rgb(55, 134, 95);
+  box-shadow: 0px 0px 1px black;
 }
 
-/* 해상도가 768px 이상일 때 실행함
-@media all and (min-width:768px) {
+.mini-day .mini-day-body .mini-day-contents{
+  height: var(--mini-day-main-height);
+  width: var(--mini-day-main-width);
+  padding: 2vh 2vw;
+}
 
-  :root {
-    --cover-height: 75vh;
-    --list-height: 25vh;
-    --list-title-height: 48px;
-  }
+.mini-day .mini-day-body .mini-day-contents .day-content{
+  margin: 1vh 2vw;
+  height: calc(var(--mini-day-main-height) - 4vh);
+  overflow:scroll;
+
+  text-align: center;
+}
+
+.mini-day .mini-day-body .mini-day-contents .day-content .todo-wrap{
+  border:2px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  margin: 1vh 1vw;
+  padding: 1vh 2vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#add-new-btn{
+  max-width: 32px;
+  max-height: 32px;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 0 10px 15px rgba(255,255,255,0.1) inset, 0 0 10px 3px rgba(255,255,255,0.5) ;
+  transition: all 150ms ease-in-out;
+    
+}
 
 
-} */
+#add-new-btn:hover {
+  box-shadow: 0 0 40px 1px rgba(255,255,255) inset, 0 0 5px -3px rgba(0,0,0,0.5) ;
+}
+
+#add-new-btn img{
+  max-width: 16px;
+  max-height: 16px;
+  width: 16px;
+  height: 16px;
+  vertical-align:middle;
+}
+
+.day-content .todo-wrap .todo-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border : 2px solid black;
+  min-width : 12px;
+  min-height : 12px;
+  width : 12px;
+  height : 12px;
+  background-color: none;
+  margin: 1vh 2vw;
+}
+
+.day-content .todo-wrap .todo-content{
+  margin-left: 1vw;
+  width:100%;
+  margin-right: 2.5vw;
+  word-break: break-all;
+}
+
+.day-content .todo-delete{
+  position: relative;
+  display: flex;
+  min-width: 12px;
+  width: 12px;
+}
+.day-content .todo-delete:hover{
+  fill:rgba(244,0,0,0.9);
+}
 
 /* Tablet Device */
 /* 해상도가 768px 이상이고 1024px 이하일 때 실행함 */
@@ -390,13 +625,24 @@
       --list-title-height: 42px;
 
       --mini-week-title-width: 35vw;
+
+
+  --mini-day-width: 50vw;
+  --mini-day-height : var(--list-height);
+  
+  --mini-day-title-height: var(--list-title-height);
+  --mini-day-side-width: 15vw;
+  --mini-day-side-item-height: calc((var(--mini-day-height) - var(--mini-day-title-height))/3);
+  --mini-day-main-width: calc(var(--mini-day-width) - var(--mini-day-side-width));
+  --mini-day-main-height: calc(var(--mini-day-height) - var(--mini-day-title-height));
+
     }
 
     #input-wrap{
       bottom : 50vh;
     }
 
-    .weekly-calendar .calendar-top-wrap .current-month{
+    .weekly-calendar .calendar-top-wrap .current-week{
       flex-direction: row;
     }
 }
@@ -426,7 +672,7 @@
       bottom : 40vh;
     }
     
-    .weekly-calendar .calendar-top-wrap .current-month{
+    .weekly-calendar .calendar-top-wrap .current-week{
       flex-direction: row;
     }
 
@@ -460,6 +706,4 @@
       width: var(--mini-week-side-item);
       flex-direction: column;
     }
-
-
 }
