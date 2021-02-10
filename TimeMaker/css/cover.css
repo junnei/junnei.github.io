@@ -344,7 +344,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transition:all 1s ease;
+  transition:transform 1s ease, background-color 1s ease;
   background-color: rgba(245,248,250,0.5);
 }
 
@@ -353,13 +353,13 @@
 }
 
 .cover .mini-list.close{
-  transform: translateY(50vh);
+  transform: translateY(var(--list-height));
 }
 
 .cover .mini-list #mini-list-setting{
   position: absolute;
   right: 0;
-  bottom: 50vh;
+  bottom: var(--list-height);
   width: 48px;
   height: 24px;
   float: right;
@@ -688,7 +688,10 @@
   margin: 1vh 2vw;
   height: calc(var(--mini-day-main-height) - 4vh);
   overflow:scroll;
-
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -715,7 +718,6 @@
   border: none;
   box-shadow: 0 0 10px 15px rgba(255,255,255,0.1) inset, 0 0 10px 3px rgba(255,255,255,0.5) ;
   transition: all 150ms ease-in-out;
-    
 }
 
 
@@ -759,7 +761,9 @@
 
 .day-content .todo-wrap .todo-content{
   margin-left: 1vw;
-  width:100%;
+  width:25vw;
+  max-height: 10vh;
+  overflow-y: scroll;
   margin-right: 2.5vw;
   word-break: break-all;
 }
@@ -784,16 +788,6 @@
       --list-title-height: 42px;
 
       --mini-week-title-width: 35vw;
-
-
-  --mini-day-width: 50vw;
-  --mini-day-height : var(--list-height);
-  
-  --mini-day-title-height: var(--list-title-height);
-  --mini-day-side-width: 15vw;
-  --mini-day-side-item-height: calc((var(--mini-day-height) - var(--mini-day-title-height))/3);
-  --mini-day-main-width: calc(var(--mini-day-width) - var(--mini-day-side-width));
-  --mini-day-main-height: calc(var(--mini-day-height) - var(--mini-day-title-height));
 
     }
 
@@ -830,11 +824,23 @@
     #input-wrap{
       bottom : 40vh;
     }
-    
+        
+    #today-bg::before{
+      margin-top: 1.25rem;
+      width:1.5em;
+      height:1.5rem;
+    }
+
     .weekly-calendar .calendar-top-wrap .current-week{
       flex-direction: row;
     }
 
+    .weekly-calendar .calendar-top-wrap .current-week .current-year{
+      margin: 0 6px;
+      border-top: 0px solid transparent;
+      border-bottom: 0px solid #373a41;
+    }
+    
     .weekly-calendar .calendar-body{
       flex-direction: column;
     }
@@ -852,6 +858,11 @@
       height: var(--mini-week-side-height);
       flex-direction: column;
       justify-content: center;
+      box-shadow: -2px 1px 2px -2px black;
+    }
+
+    .weekly-calendar .calendar-body .calendar-day .calendar-date .week-date{
+      margin: 0;
     }
 
     .weekly-calendar .calendar-body .calendar-contents{
@@ -861,8 +872,52 @@
     }
 
     .weekly-calendar .calendar-body .calendar-contents .calendar-content{
-      padding: 2vh 0.5vw;
+      padding: 0vh 0.5vw;
       width: var(--mini-week-side-item);
-      flex-direction: column;
+      flex-direction: row;
+      height: var(--mini-week-main-height);
+      box-shadow: -2px -1px 2px  -2px rgba(0,0,0,0.8);
+    }
+
+    .mini-day .mini-day-top-wrap .current-day{
+      flex-direction: row;
+    }
+    
+    .mini-day .mini-day-top-wrap .current-day .border-bottom{
+      margin: 0 6px;
+      border-top: 0px solid transparent;
+      border-bottom: 0px solid #373a41;
+    }
+        
+    .mini-day .mini-day-body .mini-day-contents{
+      padding: 1vh 2vw;
+    }
+
+    .mini-day .mini-day-body .mini-day-contents .day-content{
+      margin: 0vh 2vw;
+      height: calc(var(--mini-day-main-height) - 1vh);
+      flex-direction: row;
+      flex-wrap:wrap;
+      justify-content: center;
+    }
+        
+    .mini-day .mini-day-body .mini-day-contents .day-content .todo-wrap{
+      padding: 0vh 2vw;
+      overflow: scroll;
+    }
+
+    .day-content .todo-wrap .todo-icon{
+      margin: 0;
+    }
+
+
+    .day-content .todo-wrap .todo-content{
+      width:8vw;
+      max-height: 10vh;
+    }
+
+    .day-content #add-new-btn{
+      position: absolute;
+      margin-top:10vh;
     }
 }
