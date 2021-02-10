@@ -529,6 +529,11 @@
   box-shadow: 0px 0px 1.5px rgba(0,0,0,0.8);
 }
 
+.weekly-calendar .calendar-body .calendar-contents .calendar-content.hovered{
+  background-color: rgba(0,0,0,0.2);
+}
+
+
 
 .calendar-content .todo-wrap{
   display: flex;
@@ -550,6 +555,15 @@
   height : 21px;
   background-color: rgba(255,255,255,0.8);
   box-shadow: 1px 1px 3px rgba(100,120,130,0.7);
+}
+
+
+.calendar-content .todo-wrap.visible{
+  opacity:1;
+}
+
+.calendar-content .todo-wrap.invisible{
+  opacity:0;
 }
 
 
@@ -826,7 +840,7 @@
     }
         
     #today-bg::before{
-      margin-top: 1.25rem;
+      margin-top: 0.5rem;
       width:1.5em;
       height:1.5rem;
     }
@@ -853,7 +867,8 @@
     }
 
     .weekly-calendar .calendar-body .calendar-day .calendar-date{
-      padding: 2vh 0.5vw;
+      padding: 0vh 0.5vw;
+      padding-top:0.5vh;
       width: var(--mini-week-side-item);
       height: var(--mini-week-side-height);
       flex-direction: column;
@@ -918,6 +933,6 @@
 
     .day-content #add-new-btn{
       position: absolute;
-      margin-top:10vh;
+      margin-top:6vh;
     }
 }

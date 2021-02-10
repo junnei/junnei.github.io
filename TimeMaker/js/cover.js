@@ -74,6 +74,7 @@ function setWeekRange(year, month, date, day) {
     }
 }
 
+
 //주간 계획표 내용
 function setWeekContent(year, month, date, day) {
     for(let i = 0; i < 7 ;i++){
@@ -114,13 +115,41 @@ function setWeekContent(year, month, date, day) {
                     }
                     item.style.backgroundColor = x.color;
                 div.appendChild(item);
+                div.draggable = true;
                 div.classList.add('todo-wrap');
                 div.addEventListener('click',activeContent);
+                div.addEventListener('dragstart', ()=>{
+                    dragStartDate = keyId;
+                    dragItem = x;
+                });
+                div.addEventListener('dragend', dragEnd);
                 input.appendChild(div);
             });
         }
+
+        input.addEventListener('dragover', dragOver);
+        input.addEventListener('dragenter', dragEnter);
+        input.addEventListener('dragleave', dragLeave);
+        input.addEventListener('drop', (e)=>{
+            e.target.classList.remove('hovered');
+            deleteTodo(dragStartDate,dragItem.id);
+            if (JSON.parse(localStorage.getItem(keyId)) === null) {
+                textData = [];
+            }
+            else{
+                textData = JSON.parse(localStorage.getItem(keyId));
+            }
+            const textObj = { id: textData.length + 1, text: dragItem.text , color: dragItem.color, start: dragItem.start, end: dragItem.end, complete: dragItem.complete};
+            textData.push(textObj);
+            localStorage.setItem(keyId, JSON.stringify(textData));
+            repaint();
+        });
         calendarContents.append(input);
     }
+}
+
+function dragEnd() {
+    this.className = 'visible';
 }
 
 function activeContent() {
@@ -135,6 +164,20 @@ function activeContent() {
         }, 1);
     }
 }
+
+function dragOver(e) {
+    e.preventDefault();
+}
+
+function dragEnter(e) {
+    e.preventDefault();
+    this.classList.add('hovered');
+}
+
+function dragLeave() {
+    this.classList.remove('hovered');
+}
+
 
 //주간 계획표 Init
 function initCalendar() {
@@ -293,7 +336,6 @@ function completeTodo(date, id) {
         if(id == x.id){
             let todos = JSON.parse(localStorage.getItem(date));
 
-            console.log(todos);
             temp = todos.splice(index,1);
             if(temp[0].complete ==0){
                 temp[0].complete = 1;
@@ -301,11 +343,9 @@ function completeTodo(date, id) {
             else{
                 temp[0].complete = 0;
             }
-            console.log(temp);
 
             todos = JSON.parse(localStorage.getItem(date));
             todos.splice(index,1,temp[0]);
-            console.log(todos);
 
             localStorage.setItem(date,JSON.stringify(todos));
             repaint();
@@ -554,6 +594,7 @@ function write(currentValue) {
     const textObj = { id: textData.length + 1, text: currentValue, color: currentColor, start: currentStart, end: currentEnd, complete:0};
     textData.push(textObj);
     localStorage.setItem(keyId, JSON.stringify(textData));
+    
   }
 
 function repaint(){
