@@ -8,6 +8,12 @@ import Dates from '../components/date'
 import Intro from '../components/intro'
 import { Navbar } from '../components/Navbar.jsx';
 
+var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+const dateNow = (year+'-'+((month>=10)?month:('0'+month))+'-'+((day>=10)?day:('0'+day)));
+
 export default function Home({ allPostsData }) {
   return (
     <Layout home>
@@ -29,7 +35,7 @@ export default function Home({ allPostsData }) {
             </Link>
             <br />
             <small className={utilStyles.lightText}>
-              <Dates dateString={(new Date).getTime()} />
+              <Dates dateString={dateNow} />
             </small>
           </li>
         </ul>
