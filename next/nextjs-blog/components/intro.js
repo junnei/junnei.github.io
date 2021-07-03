@@ -7,10 +7,11 @@ export default function Intro() {
         <>
         <Background/>
         <Wrapper>
+            <a href="/blog">
             <Line
                 title={'Blog'}
                 src={'/images/profile.jpg'}
-                width={200}/>
+                width={200}/></a>
             <Line
                 title={'Music'}
                 src={'/images/profile.jpg'}
