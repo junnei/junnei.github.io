@@ -29,7 +29,7 @@ export default function Home({ allPostsData }) {
             </Link>
             <br />
             <small className={utilStyles.lightText}>
-              <Date dateString={Date.now()} />
+              <Date dateString={new Date.getTime()} />
             </small>
           </li>
         </ul>
