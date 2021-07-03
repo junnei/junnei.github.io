@@ -8,6 +8,8 @@ import Dates from '../components/date'
 import Intro from '../components/intro'
 import { Navbar } from '../components/Navbar.jsx';
 
+const dateNow = new Date.getTime();
+
 export default function Home({ allPostsData }) {
   return (
     <Layout home>
@@ -29,7 +31,7 @@ export default function Home({ allPostsData }) {
             </Link>
             <br />
             <small className={utilStyles.lightText}>
-              <Dates dateString={new Date.getTime()} />
+              <Dates dateString={dateNow} />
             </small>
           </li>
         </ul>
