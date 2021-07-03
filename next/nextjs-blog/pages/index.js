@@ -23,6 +23,22 @@ export default function Home({ allPostsData }) {
       </section>
       <section className='mx-5vw my-5vh'>
         <ul>
+          <li className={utilStyles.listItem}>
+            <Link href={`https://junnei.github.io/blog`}>
+              <a>blog</a>
+            </Link>
+            <br />
+            <small className={utilStyles.lightText}>
+              <Date dateString={Date.now()} />
+            </small>
+          </li>
+        </ul>
+      </section>
+    </Layout>
+  )
+}
+/*
+
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
               <Link href={`/posts/${id}`}>
@@ -34,12 +50,7 @@ export default function Home({ allPostsData }) {
               </small>
             </li>
           ))}
-        </ul>
-      </section>
-    </Layout>
-  )
-}
-
+*/
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData()
   return {
