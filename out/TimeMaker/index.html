@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Maker - 타임메이커, 시간을 만들어주는 혁신적인 일정 관리 서비스</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/cover.css" />
+    <link rel="stylesheet" href="css/clock.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <script defer src="js/cover.js"></script>
+    <script defer src="js/clock.js"></script>
+    <script defer src="js/header.js"></script>
+  </head>
+
+  <body>
+    <!--로딩 페이지-->
+    <div id="loading">
+      <img src="svg/loading.svg" alt="loading">
+      from loading.io
+    </div>
+
+    <!--헤더 영역-->
+    <div id="top-nav">
+      <div class="nav-time-wrap"></div>
+      <div class="nav-weather-wrap"></div>
+      <div id="close-cover">
+        <img src="svg/close.svg" alt="close">
+      </div>
+    </div>
+
+    <!--커버 페이지-->
+    <div class="cover">
+
+      <!--커버 이미지-->
+      <div class="cover-wrapper">
+        <img class="cover-image" onload="document.getElementById('loading').classList.add('invisible');" width=1600 height=900 src="https://source.unsplash.com/1600x900"/>
+
+        <!--시계 영역-->
+        <div class="clock-body">
+          <div class="clock">
+            <div class="clock-face">
+              <div class="hand hour-hand"></div>
+              <div class="hand min-hand"></div>
+              <div class="hand second-hand"></div>
+            </div>
+          </div>
+          <div class="clock-number"> </div>
+        </div>
+
+        <!--인풋 영역-->
+        <div id="input-wrap" class="input-wrap">
+          <div id="input-data"></div>
+          <input type="text" placeholder="Input 'What To Do'" id="input-box">
+          <button type="button" id="ellipsis-btn">
+            <img src="svg/ellipsis-filled.svg" alt="ellipsis">
+         </button>
+         <button type="button" id="add-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+              <path d="M19,6a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H7.41l1.3-1.29A1,1,0,0,0,7.29,9.29l-3,3a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l3,3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L7.41,14H17a3,3,0,0,0,3-3V7A1,1,0,0,0,19,6Z"/>
+           </svg>
+         </button>
+        
+        </div>
+      </div>
+
+      <!--하단 리스트-->
+      <div class="mini-list">
+        <!--하단 리스트 -->
+        <div id="mini-list-setting">
+          <div id="mini-list-opacity">O</div>
+          <div id="mini-list-close">V</div>
+        </div>
+        <!--주간 일정표-->
+        <div class="mini-weekly">
+          <div id="weekly-calendar" class="weekly-calendar">
+            <!--주간 일정표 상단바-->
+            <div class="calendar-top-wrap">
+              <div class="calendar-top-btn" id="week-pre-btn">&#60;</div>
+              <div id="current-week" class="current-week"></div>
+              <div class="calendar-top-btn" id="week-next-btn">&#62;</div>
+            </div>
+            <!--주간 일정표 메인화면-->
+            <div class="calendar-body">
+              <div class="calendar-day" id="calendar-day"></div>
+              <div class="calendar-contents" id="calendar-contents"></div>
+            </div>
+          </div>
+        </div>
+
+        <!--일간 일정표-->
+        <div class="mini-day">
+          <!--일간 일정표 사이드바-->
+          <div class="mini-day-top-wrap">
+            <div class="mini-day-top-btn" id="day-pre-btn">&#60;</div>
+            <div id="current-day" class="current-day"></div>
+            <div class="mini-day-top-btn" id="day-next-btn">&#62;</div>
+          </div>
+          <!--일간 일정표 메인화면-->
+          <div class="mini-day-body">
+            <div class="mini-day-contents" id="day-contents"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--메인화면-->
+    <div class="drawing">
+      <div class="title"></div>
+      <div class="contents"></div>
+    </div>
+
+  </body>
+</html>
