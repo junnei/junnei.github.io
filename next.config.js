@@ -3,9 +3,10 @@ const debug = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   assetPrefix: !debug ? `https://junnei.github.io` : '',
-  
+
   images: {
     loader: 'cloudinary',
-  }
+    path: 'https://junnei.github.io',
+  },
 
 }
