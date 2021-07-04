@@ -30,7 +30,7 @@ export default function Home({ allPostsData }) {
       <section className='mx-5vw my-5vh'>
         <ul>
           <li className={utilStyles.listItem}>
-            <Link href={`https://junnei.github.io/blog`}>
+            <Link href={'/blog'}>
               <a>blog</a>
             </Link>
             <br />

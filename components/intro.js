@@ -8,18 +8,21 @@ export default function Intro() {
         <Background/>
         <Wrapper>
             <a href="/blog">
-            <Line
-                title={'Blog'}
-                src={'/images/profile.jpg'}
-                width={200}/></a>
+                <Line
+                    title={'Blog'}
+                    src={'/images/profile.jpg'}
+                    width={200}/>
+            </a>
             <Line
                 title={'Music'}
                 src={'/images/profile.jpg'}
                 width={300}/>
-            <Line
-                title={'Project'}
-                src={'/images/profile.jpg'}
-                width={400}/>
+            <a href="/JavaScript30">
+                <Line
+                    title={'Project'}
+                    src={'/images/profile.jpg'}
+                    width={400}/>
+            </a>
         </Wrapper>
         </>
     )
