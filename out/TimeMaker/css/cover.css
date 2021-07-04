@@ -1,0 +1,938 @@
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다.
+모든 해상도에서 이 코드가 실행된다.
+미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+
+:root {
+  --cover-height: 50vh;
+  --list-height: 50vh;
+  --list-title-height: 64px;
+
+  --mini-week-width: 50vw;
+  --mini-week-height : var(--list-height);
+ 
+  --mini-week-title-width: 30vw;
+  --mini-week-title-height: var(--list-title-height);
+
+  --mini-week-side-width : 15vw;
+  --mini-week-side-height : calc(var(--mini-week-height) - var(--mini-week-title-height));
+  --mini-week-side-item : calc(var(--mini-week-side-height) / 7);
+
+  --mini-week-main-width : calc(var(--mini-week-width) - var(--mini-week-side-width));
+  --mini-week-main-height: calc(var(--mini-week-height) - var(--mini-week-title-height));
+
+  --mini-day-width: 50vw;
+  --mini-day-height : var(--list-height);
+  
+  --mini-day-title-width: 30vw;
+  --mini-day-title-height: var(--list-title-height);
+
+  --mini-day-main-width: calc(var(--mini-day-width) - var(--mini-day-side-width));
+  --mini-day-main-height: calc(var(--mini-day-height) - var(--mini-day-title-height));
+}
+
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 로딩 페이지 */
+#loading{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top:0px;
+  left:0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #373a41;
+  opacity: 0.93;
+  z-index: 10;
+  color:white;
+  font: 0.5em sans-serif;
+}
+
+#loading img{
+  transform:scale(0.5) translateY(15vh);
+  filter: drop-shadow( 0px 0px 3px rgba(255, 255, 255, .7));
+}
+
+#loading.invisible{
+  display: none;
+}
+
+
+/* 커버 페이지 */
+.cover{
+  font-family: "Poppins", sans-serif;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.cover .cover-wrapper{
+  height: 100vh;
+  overflow:hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
+}
+
+.cover .cover-wrapper .cover-image{
+  transition:transform 0.5s ease, filter 0.5s ease;
+  height: 100vh;
+  object-fit:cover;
+  transform:scale(1.1);
+  filter: blur(2px);
+}
+
+.cover .cover-wrapper .cover-image:hover{
+  transform:scale(1);
+  filter: blur(0px);
+}
+
+
+#input-wrap{
+  position: fixed;
+  bottom : 85vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition:bottom 0.5s ease;
+}
+
+#input-wrap.activeClock{
+  bottom : 55vh;
+}
+
+#input-wrap:focus-within{
+  bottom : 55vh;
+}
+
+#input-data{
+  height: 38px;
+  background-color: rgba(255,255,255,0.5);
+  border: 3px solid rgba(255,255,255,0.5);
+  border-radius: 10px;
+  transition:transform 0.3s ease,opacity 0.1s ease-in;
+  position: absolute;
+  opacity: 0;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  transform:none;
+}
+
+#input-data.active{
+  opacity: 1;
+  transform:translateY(-3.1rem);
+}
+
+#input-data.visible{
+  display:flex;
+}
+
+#input-data input{
+  border:none;
+  background-color: rgba(255,255,255,0.5);
+  margin: 0 3px;
+}
+
+#input-data .color-wrap{
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+	width: 32px;
+  height: 32px;
+  padding-bottom: 4px;
+  font-size:3px;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#color-picker-wrap{
+  background-color: white;
+	width: 16px;
+	height: 16px;
+	border: 1px solid white;
+  box-shadow: 0 0 3px 1px rgba(0,0,0,0.4);
+  outline: none;
+}
+
+#input-color{
+  opacity: 0;
+  float:left;
+  width:18px;
+  margin-left:-2px;
+  margin-top:-5px;
+}
+
+
+#input-data #input-date{
+  height: 32px;
+  width: 140px;
+  padding-left: 5px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+}
+
+
+#input-date::-webkit-datetime-edit-text,
+#input-date::-webkit-clear-button,
+#input-date::-webkit-inner-spin-button,
+#input-date::-webkit-outer-spin-button {
+    display:none;
+}
+
+#input-date::-webkit-calendar-picker-indicator {
+    margin: 0;
+    padding: 0;
+    padding-right:5px;
+}
+     
+
+#input-time-start,
+#input-time-end{
+  padding-left:5px;
+  width: 90px;
+  height: 32px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  outline: none;
+}
+
+#input-time-start::-webkit-datetime-edit-text,
+#input-time-start::-webkit-clear-button,
+#input-time-start::-webkit-inner-spin-button,
+#input-time-start::-webkit-outer-spin-button,
+#input-time-end::-webkit-datetime-edit-text,
+#input-time-end::-webkit-clear-button,
+#input-time-end::-webkit-inner-spin-button,
+#input-time-end::-webkit-outer-spin-button{
+    display:none;
+}
+
+#input-time-start::-webkit-calendar-picker-indicator,
+#input-time-end::-webkit-calendar-picker-indicator{
+    margin: 0;
+    padding: 0;
+    padding-right:5px;
+}
+     
+#reset-btn{
+  text-align: center;
+  height: 16px;
+  width: 16px;
+  border: 0;
+  border-radius: 50%;
+  margin-right: 3px;
+  background-color: rgba(255,255,255,0.5);
+}
+
+
+
+#input-box{
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  border: 0.1rem solid transparent;
+  width: 30vw;
+
+  font-size: 1rem;
+
+  transition:padding 0.5s ease, width 1s ease, font-size 0.5s ease;
+
+  background-color: rgba(255,255,255,0.5);
+  box-shadow: 
+    inset 0 0 0 5px black,
+    inset 6px 6px 5px rgba(dodgerblue, 1),
+    3px 3px 5px rgba(dodgerblue, 1);
+}
+
+#input-box:focus{
+  outline: none;
+
+  padding: 1rem 1.2rem;
+  width: 50vw;
+  font-size: 1.2rem;
+
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.4);
+  background-color: rgba(255,255,255,0.8);
+}
+
+
+#input-box::placeholder {
+  color: white;
+  font-size: 0.8rem;
+  text-shadow: 0 0 3px rgba(0,0,0,0.4);
+}
+
+#input-box:focus::placeholder{
+  color:rgba(128,128,128,0.4);
+  text-shadow:none;
+}
+
+
+#ellipsis-btn{
+  display: none;
+}
+
+#input-wrap:focus-within #ellipsis-btn{
+  display: flex;
+  position: absolute;
+  right: 50px;
+  border:none;
+  background-color: transparent;
+}
+
+#input-wrap:focus-within #ellipsis-btn img{
+  width:1.15rem;
+}
+
+
+#add-btn{
+  position: absolute;
+  right:20px;
+  width: 1.15rem;
+  height: 1.15rem;
+  text-align: left;
+  border-radius: 50%;
+  border:none;
+  background-color: transparent;
+  box-shadow: 0 0 0 1px rgba(255,255,255,1);
+  fill:white;
+}
+
+#add-btn:hover{
+  background-color: white;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.5);
+  fill:rgb(96,96,96);
+}
+
+#input-wrap:focus-within #add-btn{
+  fill:black;
+  box-shadow:none;
+}
+
+#input-wrap:focus-within #add-btn:hover{
+  background-color: white;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.75);
+  fill:black;
+}
+
+
+.cover .mini-list{
+  position:fixed;
+  bottom:0px;
+  width: 100vw;
+  height: var(--list-height);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition:transform 1s ease, background-color 1s ease;
+  background-color: rgba(245,248,250,0.5);
+}
+
+.cover .mini-list.opacity{
+  background-color: rgb(245,248,250);
+}
+
+.cover .mini-list.close{
+  transform: translateY(var(--list-height));
+}
+
+.cover .mini-list #mini-list-setting{
+  position: absolute;
+  right: 0;
+  bottom: var(--list-height);
+  width: 48px;
+  height: 24px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 10px;
+}
+
+.cover .mini-list #mini-list-setting #mini-list-opacity,
+.cover .mini-list #mini-list-setting #mini-list-close{
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 10px;
+}
+
+
+.cover .mini-list .mini-weekly{
+  height: var(--list-height);
+  width: var(--mini-week-width);
+}
+
+
+/* 주간 일정표 */
+.mini-weekly .weekly-calendar{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.weekly-calendar .calendar-top-wrap{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: var(--mini-week-title-height);
+  box-shadow: 0px 0px 1px black;
+}
+
+.weekly-calendar .calendar-top-wrap .current-week{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: var(--mini-week-title-width);
+  height: var(--mini-week-title-height);
+
+}
+
+.weekly-calendar .calendar-top-wrap .current-week .current-year{
+  margin: 0 6px;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #373a41;
+}
+
+.weekly-calendar .calendar-top-wrap .calendar-top-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc((var(--mini-week-width) - var(--mini-week-title-width))/ 2);
+  height: var(--mini-week-title-height);
+}
+
+
+.weekly-calendar .calendar-body{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 1px black;
+}
+
+.weekly-calendar .calendar-body .calendar-day{
+  width: var(--mini-week-side-width);
+  height: var(--mini-week-main-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date{
+  padding: 0 2vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: var(--mini-week-side-item);
+  box-shadow: -5px 1px 1px black;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date .week-day{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 6vw;
+  text-align: center;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date .week-date{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 3vw;
+  height: 3vw;
+  margin-left: 2vw;
+  text-align: center;
+  z-index: 1;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date.today{
+  font-weight: 500;
+}
+
+.weekly-calendar .calendar-body .calendar-day .calendar-date.today .week-date{
+  color :white;
+}
+
+#today-bg{
+  position: absolute;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 3vw;
+  height: 3vw;
+}
+
+#today-bg::before{
+  position:inherit;
+  content: "";
+  width:1.8em;
+  height:1.8rem;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,1);
+}
+
+.weekly-calendar .calendar-body .calendar-day .Sun{
+  color :red;
+}
+
+.weekly-calendar .calendar-body .calendar-day .Sat{
+  color : blue;
+}
+
+.weekly-calendar .calendar-body .calendar-contents{
+  display: flex;
+  width: var(--mini-week-main-width);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.weekly-calendar .calendar-body .calendar-contents .calendar-content{
+  padding: 0 2vw;
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: center;
+  align-items: center;
+  width: var(--mini-week-main-width);
+  height: var(--mini-week-side-item);
+  overflow: scroll;
+  border-radius: 5px;
+  box-shadow: 0px 0px 1.5px rgba(0,0,0,0.8);
+}
+
+.weekly-calendar .calendar-body .calendar-contents .calendar-content.hovered{
+  background-color: rgba(0,0,0,0.2);
+}
+
+
+
+.calendar-content .todo-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0px solid black;
+  border-radius: 6px;
+  width : 28px;
+  height : 21px;
+  background-color: rgba(255,255,255,0.3);
+  margin: 1.5px 3px;
+}
+
+.calendar-content .todo-wrap:hover{
+  border: 1px solid rgba(120,120,120,0.1);
+  min-width : 22px;
+  min-height : 21px;
+  width : 28px;
+  height : 21px;
+  background-color: rgba(255,255,255,0.8);
+  box-shadow: 1px 1px 3px rgba(100,120,130,0.7);
+}
+
+
+.calendar-content .todo-wrap.visible{
+  opacity:1;
+}
+
+.calendar-content .todo-wrap.invisible{
+  opacity:0;
+}
+
+
+.calendar-content .todo-wrap .todo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border : 2px solid black;
+  min-width : 10px;
+  min-height : 10px;
+  width : 10px;
+  height : 10px;
+  background-color: white;
+}
+
+
+.calendar-content .todo-wrap .todo.complete::after{
+  content:"";
+  position: absolute;
+  display: inline-block;
+  height: 15px;
+  width: 10px;
+  transform: translateX(1.5px) translateY(-6px) rotate(45deg);
+  
+  border-bottom: 5px solid black;
+  border-right: 5px solid black;
+}
+
+
+.calendar-content .todo-wrap .todo .todo-content{
+  position: absolute;
+  display: none;
+  opacity: 0;
+  justify-content: center;
+  align-self: flex-end;
+  margin-bottom: 6px;
+  padding: 5px 8px;
+  min-width:60px;
+  max-width:180px;
+  min-height:30px;
+  border : 2px solid rgb(150,150,160);
+  transition:opacity 1s ease,transform 0.5s ease;
+  transform:none;
+  background:rgba(245,248,250,0.95);
+  border-radius: 30px;
+}
+
+
+.calendar-content .todo-wrap.visible .todo .todo-content{
+  display: flex;
+}
+
+.calendar-content .todo-wrap.active .todo .todo-content{
+  opacity: 1;
+  transform: translateY(-20px);
+}
+
+.calendar-content .todo-wrap.active .todo .todo-content::before {
+  border-top: 9px solid rgb(150,150,160);
+  border-bottom:0px solid transparent;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  content:"";
+  position:absolute;
+  bottom:-9px;
+ }
+
+.calendar-content .todo-wrap.active .todo .todo-content::after {
+  border-top: 6px solid rgba(245,248,250,1);
+  border-bottom:0px solid transparent;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  content:"";
+  position:absolute;
+  bottom:-6px;
+ }
+
+
+
+
+/* 일간 일정표 */
+.cover .mini-list .mini-day{
+  display: flex;
+  flex-direction: column;
+  height: var(--list-height);
+  width: var(--mini-day-width);
+}
+
+.mini-day .mini-day-top-wrap{
+  height: var(--mini-day-title-height);
+  width: var( --mini-day-width);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  box-shadow: 0px 0px 1px black;
+}
+
+.mini-day .mini-day-top-wrap .mini-day-top-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  width: calc((var(--mini-day-width) - var(--mini-day-title-width))/ 2);
+  height: var(--mini-day-title-height);
+}
+
+
+.mini-day .mini-day-top-wrap .current-day{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: var(--mini-week-title-width);
+  height: var(--mini-week-title-height);
+}
+
+.mini-day .mini-day-top-wrap .current-day .border-bottom{
+  margin: 0 6px;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #373a41;
+}
+
+.mini-day .mini-day-body{
+  height: var(--mini-day-main-height);
+  width: var(--mini-day-main-width);
+  box-shadow: 0px 0px 1px black;
+}
+
+.mini-day .mini-day-body .mini-day-contents{
+  height: var(--mini-day-main-height);
+  width: var(--mini-day-main-width);
+  padding: 2vh 2vw;
+}
+
+.mini-day .mini-day-body .mini-day-contents .day-content{
+  margin: 1vh 2vw;
+  height: calc(var(--mini-day-main-height) - 4vh);
+  overflow:scroll;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.mini-day .mini-day-body .mini-day-contents .day-content .todo-wrap{
+  border:2px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  margin: 1vh 1vw;
+  padding: 1vh 2vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#add-new-btn{
+  max-width: 32px;
+  max-height: 32px;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 0 10px 15px rgba(255,255,255,0.1) inset, 0 0 10px 3px rgba(255,255,255,0.5) ;
+  transition: all 150ms ease-in-out;
+}
+
+
+#add-new-btn:hover {
+  box-shadow: 0 0 40px 1px rgba(255,255,255) inset, 0 0 5px -3px rgba(0,0,0,0.5) ;
+}
+
+#add-new-btn img{
+  max-width: 16px;
+  max-height: 16px;
+  width: 16px;
+  height: 16px;
+  vertical-align:middle;
+}
+
+.day-content .todo-wrap .todo-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border : 2px solid black;
+  min-width : 12px;
+  min-height : 12px;
+  width : 12px;
+  height : 12px;
+  background-color: none;
+  margin: 1vh 2vw;
+}
+
+.day-content .todo-wrap .todo-icon.complete::after{
+  content:"";
+  position: absolute;
+  display: inline-block;
+  height: 15px;
+  width: 10px;
+  transform: translateX(1.5px) translateY(-6px) rotate(45deg);
+  
+  border-bottom: 5px solid black;
+  border-right: 5px solid black;
+}
+
+
+.day-content .todo-wrap .todo-content{
+  margin-left: 1vw;
+  width:25vw;
+  max-height: 10vh;
+  overflow-y: scroll;
+  margin-right: 2.5vw;
+  word-break: break-all;
+}
+
+.day-content .todo-delete{
+  position: relative;
+  display: flex;
+  min-width: 12px;
+  width: 12px;
+}
+.day-content .todo-delete:hover{
+  fill:rgba(244,0,0,0.9);
+}
+
+/* Tablet Device */
+/* 해상도가 768px 이상이고 1024px 이하일 때 실행함 */
+@media all and (min-width:768px) and (max-width:1024px) {
+
+    :root {
+      --cover-height: 55vh;
+      --list-height: 45vh;
+      --list-title-height: 45px;
+
+      --mini-week-title-width: 35vw;
+
+    }
+
+    #input-wrap{
+      bottom : 50vh;
+    }
+
+    .weekly-calendar .calendar-top-wrap .current-week{
+      flex-direction: row;
+    }
+}
+
+/* Desktop Device */
+/* 해상도가 1025px 이상일 때 실행함 */
+@media all and (min-width:1025px) {
+
+  :root {
+    --cover-height: 70vh;
+    --list-height: 30vh;
+    --list-title-height: 42px;
+
+    --mini-week-title-width: 40vw;
+
+    --mini-week-side-width : var(--mini-week-width);
+    --mini-week-side-height : calc((var(--mini-week-height) - var(--mini-week-title-height))/4);
+    --mini-week-side-item : calc(var(--mini-week-side-width) / 7);
+
+    --mini-week-main-width : var(--mini-week-width);
+    --mini-week-main-height : calc(var(--mini-week-height) - var(--mini-week-title-height) - var(--mini-week-side-height));
+
+    }
+
+
+    #input-wrap{
+      bottom : 40vh;
+    }
+        
+    #today-bg::before{
+      margin-top: 0.5rem;
+      width:1.5em;
+      height:1.5rem;
+    }
+
+    .weekly-calendar .calendar-top-wrap .current-week{
+      flex-direction: row;
+    }
+
+    .weekly-calendar .calendar-top-wrap .current-week .current-year{
+      margin: 0 6px;
+      border-top: 0px solid transparent;
+      border-bottom: 0px solid #373a41;
+    }
+    
+    .weekly-calendar .calendar-body{
+      flex-direction: column;
+    }
+
+    .weekly-calendar .calendar-body .calendar-day{
+      height: var(--mini-week-side-height);
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .weekly-calendar .calendar-body .calendar-day .calendar-date{
+      padding: 0vh 0.5vw;
+      padding-top:0.5vh;
+      width: var(--mini-week-side-item);
+      height: var(--mini-week-side-height);
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: -2px 1px 2px -2px black;
+    }
+
+    .weekly-calendar .calendar-body .calendar-day .calendar-date .week-date{
+      margin: 0;
+    }
+
+    .weekly-calendar .calendar-body .calendar-contents{
+      width: var(--mini-week-main-width);
+      height: var(--mini-week-main-height);
+      flex-direction: row;
+    }
+
+    .weekly-calendar .calendar-body .calendar-contents .calendar-content{
+      padding: 0vh 0.5vw;
+      width: var(--mini-week-side-item);
+      flex-direction: row;
+      height: var(--mini-week-main-height);
+      box-shadow: -2px -1px 2px  -2px rgba(0,0,0,0.8);
+    }
+
+    .mini-day .mini-day-top-wrap .current-day{
+      flex-direction: row;
+    }
+    
+    .mini-day .mini-day-top-wrap .current-day .border-bottom{
+      margin: 0 6px;
+      border-top: 0px solid transparent;
+      border-bottom: 0px solid #373a41;
+    }
+        
+    .mini-day .mini-day-body .mini-day-contents{
+      padding: 1vh 2vw;
+    }
+
+    .mini-day .mini-day-body .mini-day-contents .day-content{
+      margin: 0vh 2vw;
+      height: calc(var(--mini-day-main-height) - 1vh);
+      flex-direction: row;
+      flex-wrap:wrap;
+      justify-content: center;
+    }
+        
+    .mini-day .mini-day-body .mini-day-contents .day-content .todo-wrap{
+      padding: 0vh 2vw;
+      overflow: scroll;
+    }
+
+    .day-content .todo-wrap .todo-icon{
+      margin: 0;
+    }
+
+
+    .day-content .todo-wrap .todo-content{
+      width:8vw;
+      max-height: 10vh;
+    }
+
+    .day-content #add-new-btn{
+      position: absolute;
+      margin-top:6vh;
+    }
+}
