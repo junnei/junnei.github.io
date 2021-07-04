@@ -13,10 +13,12 @@ export default function Intro() {
                     src={'/images/profile.jpg'}
                     width={200}/>
             </a>
-            <Line
-                title={'Music'}
-                src={'/images/profile.jpg'}
-                width={300}/>
+            <a href="/archieve">
+                <Line
+                    title={'Music'}
+                    src={'/images/profile.jpg'}
+                    width={300}/>
+            </a>
             <a href="/JavaScript30">
                 <Line
                     title={'Project'}
