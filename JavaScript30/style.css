@@ -1,0 +1,292 @@
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(
+    to right,
+    rgba(201, 62, 182, 0.75),
+    rgba(55, 23, 197, 0.75)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.glass {
+  background: white;
+  margin: 10vh 0;
+  min-height: 70vh;
+  width: 80vw;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  border-radius: 50px;
+  z-index: 2;
+  backdrop-filter: blur(2rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.projects {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.projects .status {
+  width: 80vw;
+  margin: 3vh auto;
+  font-size: xx-large;
+  font-weight: 600;
+  text-shadow: 0px 0px 5px whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-container{
+  margin-bottom: 4vh;
+  max-width: 70vw;
+  min-height: 60vh;
+  display:flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  align-items: left;
+  justify-content:space-around;
+}
+
+.card-container .card {
+  max-height: 25vh;
+  width: 10vw;
+  transition: all 1s ease;
+  transform-style: preserve-3d;
+  display:flex;
+  flex-direction: column;
+  opacity: 1;
+  font-size:10px;
+  border-radius: 30px;
+  padding: 1vh 1vw;
+  margin: 1vh 1vw;
+  box-shadow: inset -5px -5px 20px rgba(255,240,245,0.6), inset 4px 4px 15px rgba(0,0,0,0.6);
+  }
+
+.card-container .card:hover {
+  box-shadow: inset -3px -3px 10px rgba(255,255,255,0.5), inset 3px 3px 5px rgba(0,0,0,0.6);
+}
+
+.card-container .card:hover .card-thumbnail .card-image{
+  border-radius: 20px;
+  height:15vh;
+}
+
+.card-container .card .card-thumbnail {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+}
+
+
+.card-container .card .card-thumbnail .circle {
+  width: 10vh;
+  height: 10vh;
+  position :absolute;
+  object-fit: cover;
+  object-position: top;
+  background: linear-gradient(
+    to right,
+    rgba(187, 43, 216, 0.75),
+    rgba(8, 83, 156, 0.75)
+  );
+  border-radius: 50%;
+}
+
+
+.card-container .card .card-thumbnail .card-image {
+  height:12vh;
+  width:12vh;
+  object-fit:cover;
+  border-radius: 30%;
+  min-width: 72px;
+  min-height: 72px;
+  z-index: 4;
+  transition: all 0.75s ease-out;
+  filter: drop-shadow(0px 0px 3px rgba(255,255,255,0.8));
+}
+
+.card-container .card .card-info {
+  font-size: medium;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 0px;
+}
+
+
+.card-container .card .contents {
+  font-size : x-large;
+  font-weight : 500;
+  text-align : center;
+  padding : 2vh 0;
+}
+
+.card-container .card .go {
+  padding: 1.2vh 5vw;
+  background: linear-gradient(
+    to right,
+    rgba(201, 62, 182, 0.8),
+    rgba(55, 23, 197, 0.8)
+  );
+  border: none;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: large;
+  color: white;
+}
+
+
+#button {
+  position: fixed;
+  overflow: hidden;
+  left:5vw;
+  top:8vh;
+
+  min-width: 128px;
+  min-height: 36px;
+  width: 10vw;
+  height: 10vh;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(
+    to right,
+    rgba(245, 70, 66, 0.75),
+    rgba(255, 255, 156, 0.75)
+  );
+  border: none;
+
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
+  border-radius: 50px;
+
+  font-size: xx-large;
+  font-weight: 900;
+  color: white;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:space-evenly;
+  transform-origin: left;
+  transition: all 2s ease;
+  transform: none;
+  animation: button 2s infinite linear;
+}
+
+#button.closed:hover{
+  animation: none;
+}
+
+#button .button-container{
+  min-width: 64px;
+  min-height: 64px;
+  height: 8vh;
+  width: 8vh;
+  object-fit: cover;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+
+#button .button-container .profile{
+  min-width: 64px;
+  min-height: 64px;
+  width: 8.2vh;
+  margin: -0.1vh -0.1vh;
+}
+
+#button .button-info{
+  margin-left: 1vw;
+  padding: 0 0.5vw;
+  text-shadow: 0px 0px 3px gray;
+  transition: all 0.5s ease-in-out;
+}
+
+@keyframes button{
+  0%, 50%{
+		transform: rotate(0deg);
+	}
+  5%, 15%, 25%, 35%, 45% {
+    transform: rotate(3deg);
+  }
+  10%, 20%, 30%, 40% {
+    transform: rotate(-1deg);
+  }
+}
+
+
+
+.circle1,
+.circle2,
+.circle3 {
+  background: white;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.2)
+  );
+  height: 30vh;
+  width: 30vh;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle4,
+.circle5,
+.circle6 {
+  background: white;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.2)
+  );
+  height: 10vh;
+  width: 10vh;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle1 {
+  top: 3vh;
+  right: 5vw;
+}
+.circle2 {
+  bottom: 3vh;
+  left: 50vw;
+}
+.circle3 {
+  bottom: 10vh;
+  left: 5vw;
+}
+.circle4 {
+  top: 10vh;
+  left: 8vw;
+}
+.circle5 {
+  bottom: 15vh;
+  left: 30vw;
+}
+.circle6 {
+  bottom: 20vh;
+  right: 8vw;
+}
