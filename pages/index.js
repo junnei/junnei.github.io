@@ -24,8 +24,10 @@ export default function Home({ allPostsData }) {
       <Container>
         <Intro />
       </Container>
-      <section className="mx-5vw my-5vh text-4xl font-bold">
-        <p>Blog.</p>
+      <section className="bg-accent-1 border-t border-accent-2">
+        <section className="mx-5vw my-5vh text-4xl font-bold">
+          <p>Something.</p>
+        </section>
       </section>
       <section className='mx-5vw my-5vh'>
         <ul>
@@ -62,6 +64,7 @@ export default function Home({ allPostsData }) {
         </ul>
       </section>
     </Layout>
+    
   )
 }
 /*

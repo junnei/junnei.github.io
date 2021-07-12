@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const Navbar = () => {
   return (
-      <nav className='horizontal md:vertical shadow-sm right-0 top-0 fixed flex items-center flex-wrap bg-gradient-to-br md:bg-gradient-to-b from-green-300 to-indigo-400 p-3 sm:w-100vw md:w-16 sm:h-20 md:h-100vh sm:flex-row md:flex-col sm:justify-end md:justify-center'>
+      <nav className='horizontal md:vertical shadow-sm z-50 right-0 top-0 fixed flex items-center flex-wrap bg-gradient-to-br md:bg-gradient-to-b from-green-300 to-indigo-400 p-3 sm:w-100vw md:w-16 sm:h-20 md:h-100vh sm:flex-row md:flex-col sm:justify-end md:justify-center'>
        <Link href='/'>
           <a className='text-shadow inline-flex items-center p-2 mr-4 '>
             <svg

@@ -8,7 +8,7 @@ export default function Line({
     return (
       <>
       <section className="flex-col md:flex-row flex items-center md:justify-between mb-12">
-        <h1 className="intro-hover text-6xl lg:text-8xl font-bold tracking-tighter leading-tight md:pr-2">
+        <h1 className="intro-hover text-6xl lg:text-7xl font-bold tracking-tighter leading-tight md:pr-2">
           {title}.
         </h1>
         <div className="flex text-center md:text-right text-lg mr-10vw">
