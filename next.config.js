@@ -5,8 +5,8 @@ module.exports = {
   assetPrefix: !debug ? `https://junnei.github.io` : '',
 
   images: {
-    loader: 'cloudinary',
-    path: 'https://junnei.github.io',
+    loader: 'imgix',
+    path: 'https://junnei.github.io/',
   },
 
 }

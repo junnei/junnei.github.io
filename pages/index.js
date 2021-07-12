@@ -38,6 +38,27 @@ export default function Home({ allPostsData }) {
               <Dates dateString={dateNow} />
             </small>
           </li>
+
+          <li className={utilStyles.listItem}>
+            <Link href={'/TimeMaker/'}>
+              <a>TimeMaker</a>
+            </Link>
+            <br />
+            <small className={utilStyles.lightText}>
+              <Dates dateString={dateNow} />
+            </small>
+          </li>
+
+          <li className={utilStyles.listItem}>
+            <Link href={'/JavaScript30/'}>
+              <a>JavaScript30</a>
+            </Link>
+            <br />
+            <small className={utilStyles.lightText}>
+              <Dates dateString={dateNow} />
+            </small>
+          </li>
+
         </ul>
       </section>
     </Layout>
